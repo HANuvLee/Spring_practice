@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mail">
+  
+   <select id="hhMailtotal" resultType="int">
+      select Count(*) from mail m, MEMBER_OFFICEINFO o 
+                  where m.mem_no = o.mem_no
+                  and m.mail_del = 0
+                     and (m.mem_no = '0001' or m.MAIL_RECEIVER = '0001')
+   </select>
+   
+   <select id="hhDelMailtotal" resultType="int">
+      select Count(*) from mail m, MEMBER_OFFICEINFO o 
+                  where m.mem_no = o.mem_no
+                  and m.mail_del = 1
+                  and (m.mem_no = '0001' or m.MAIL_RECEIVER = '0001')
+   </select>
+   
+   <select id="hhMailListAll" parameterType="Mail" resultType="Mail">
+      <![CDATA[
+         select * 
+         from (select rownum rn, a.* 
+               from (select m.*, o.mem_name, o.mem_rank from mail m, MEMBER_OFFICEINFO o
+               where m.mem_no = o.mem_no
+               and m.mail_del = 0
+               and (m.mem_no = '0001' or m.MAIL_RECEIVER = '0001')
+               order by m.mail_no desc) a) 
+        where  rn >= #{start} 
+        and    rn <= #{end}
+        ]]>
+   </select>
+   
+   <select id="hhDelMailListAll" parameterType="Mail" resultType="Mail">
+      <![CDATA[
+         select * 
+         from (select rownum rn, a.* 
+               from (select m.*, o.mem_name, o.mem_rank from mail m, MEMBER_OFFICEINFO o
+               where m.mem_no = o.mem_no
+               and m.mail_del = 1
+               and (m.mem_no = '0001' or m.MAIL_RECEIVER = '0001')
+               order by m.mail_no desc) a) 
+        where  rn >= #{start} 
+        and    rn <= #{end}
+        ]]>
+   </select>
+   
+   <select id="hhSenMailtotal" resultType="int">
+      select Count(*) from mail 
+      where mem_no = '0001'
+      and mail_del = 0
+   </select>
+   
+   <select id="hhSenMailListAll" parameterType="Mail" resultType="Mail">
+      <![CDATA[
+         select * 
+         from (select rownum rn, a.* 
+               from (select m.*, o.mem_name, o.mem_rank from mail m, MEMBER_OFFICEINFO o 
+                  where m.mail_receiver = o.mem_no
+                  and m.mail_del = 0
+                  and m.mem_no = '0001'
+                  order by mail_no desc) a) 
+        where  rn >= #{start} 
+        and    rn <= #{end}
+        ]]>
+   </select>
+   
+   <select id="hhRecMailtotal" resultType="int">
+      select Count(*) from mail 
+      where mail_receiver = '0001'
+      and mail_del = 0
+   </select>
+   
+   <select id="hhRecMailListAll" parameterType="Mail" resultType="Mail">
+      <![CDATA[
+         select * 
+         from (select rownum rn, a.* 
+               from (select m.*, o.mem_name, o.mem_rank from mail m, MEMBER_OFFICEINFO o 
+                  where m.mem_no = o.mem_no
+                  and m.mail_del = 0
+                  and m.mail_receiver = '0001'
+                  order by mail_no desc) a) 
+        where  rn >= #{start} 
+        and    rn <= #{end}
+        ]]>
+   </select>
+  
+</mapper>

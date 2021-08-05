@@ -2,6 +2,9 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Mail"  	type="com.oracle.s20210702.model.Mail"/>
+		<typeAlias alias="Member"  	type="com.oracle.s20210702.model.Member_OfficeInfo"/>
+		<typeAlias alias="ChatRoom"  	type="com.oracle.s20210702.model.ChatRoom"/>
+		<typeAlias alias="ChatMessage"  	type="com.oracle.s20210702.model.ChatMessage"/>
 	</typeAliases>
 
 

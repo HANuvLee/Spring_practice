@@ -8,8 +8,10 @@
 </head>
 <body>
 <%
-	response.sendRedirect("mailList");
-	//response.sendRedirect("del_mailList"); //삭제된 메일함
+	//response.sendRedirect("home");
+	//response.sendRedirect("mailList");		//전체 메일함
+	//response.sendRedirect("del_mailList");	//삭제된 메일함
+	response.sendRedirect("loginForm");
 %>
 </body>
 </html>

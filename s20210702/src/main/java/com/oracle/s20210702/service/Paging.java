@@ -13,7 +13,6 @@ public class Paging {
 	private int total;				private int totalPage;
 	
 	public Paging(int total, String currentPage1) {
-		System.out.println("paging chk...!");
 		this.total = total;
 		if (currentPage1 != null) {
 			this.currentPage = Integer.parseInt(currentPage1);			

@@ -1,6 +1,8 @@
 package com.oracle.s20210702.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,7 +27,7 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int insertMessage(ChatMessage chatMessage) {
 		System.out.println("ChatDaoImpl insertMessage start...");
-		return session.selectOne("hhchatinsert", chatMessage);
+		return session.insert("hhchatinsert", chatMessage);
 	}
 
 	@Override
@@ -62,6 +64,25 @@ public class ChatDaoImpl implements ChatDao {
 	public int selectUnReadCount(ChatMessage message) {
 		System.out.println("ChatDaoImpl selectUnReadCount start...");
 		return session.selectOne("hhselectunreadcount", message);
+	}
+
+	@Override
+	public String selectroom_no(String you_name, String mem_name) {
+		System.out.println("ChatDaoImpl selectroom_no start...");
+		 Map<String, Object> map = new HashMap<String, Object>();  
+	      map.put("you_name", you_name);
+	      map.put("mem_name", mem_name);
+		return session.selectOne("hhselectroom_no", map);
+	}
+
+	@Override
+	public String insertChatroom(String you_name, String mem_name) {
+		System.out.println("ChatDaoImpl insertChatroom start...");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("you_name", you_name);
+	    map.put("mem_name", mem_name);
+	    session.insert("hhinsertChatroom", map);
+		return null;
 	}
 
 }

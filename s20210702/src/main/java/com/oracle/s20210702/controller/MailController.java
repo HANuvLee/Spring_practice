@@ -1,20 +1,27 @@
 package com.oracle.s20210702.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s20210702.model.Mail;
+import com.oracle.s20210702.model.MailFile;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 import com.oracle.s20210702.service.LoginService;
 import com.oracle.s20210702.service.MailService;
@@ -27,13 +34,17 @@ public class MailController {
 	@Autowired
 	private LoginService ls;
 	
+	
 	@RequestMapping(value = "mailList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String mailList(Mail mail, String currentPage, Model model, String mem_id, HttpServletRequest request) {
 		System.out.println("MailController mailList Start list...");
-		System.out.println(mem_id);
+		System.out.println("mail_ctrl mem_id -->" + mem_id);
 		Member_OfficeInfo mo = ms.ListMember(mem_id);
+		model.addAttribute("mo",mo);
+		System.out.println("mail CTRL mo.getMem_id" + mo.getMem_id());
 		int total = ms.total(mo);
 		System.out.println("MailController total=>" + total);
+		if (currentPage ==null) {currentPage = "1"  ; }
 		System.out.println("currentPage=>" + currentPage);
 		Paging pg = new Paging(total, currentPage);
 		mail.setStart(pg.getStart());
@@ -52,6 +63,7 @@ public class MailController {
 	public String del_mailList(Mail mail, String currentPage, Model model, String mem_id, HttpServletRequest request) {
 		System.out.println("MailController del_mailList Start list...");
 		Member_OfficeInfo mo = ms.ListMember(mem_id);
+		model.addAttribute("mo",mo);
 		int del_total = ms.del_total(mo);
 		Paging pg = new Paging(del_total, currentPage);
 		mail.setStart(pg.getStart());
@@ -70,6 +82,7 @@ public class MailController {
 		System.out.println("MailController sen_mailList Start list...");
 		System.out.println(mem_id);
 		Member_OfficeInfo mo = ms.ListMember(mem_id);
+		model.addAttribute("mo",mo);
 		int sen_total = ms.sen_total(mo.getMem_no());
 		Paging pg = new Paging(sen_total, currentPage);
 		mail.setStart(pg.getStart());
@@ -87,6 +100,7 @@ public class MailController {
 		System.out.println("MailController rec_mailList Start list...");
 		System.out.println(mem_id);
 		Member_OfficeInfo mo = ms.ListMember(mem_id);
+		model.addAttribute("mo",mo);
 		int rec_total = ms.rec_total(mo);
 		Paging pg = new Paging(rec_total, currentPage);
 		mail.setStart(pg.getStart());
@@ -110,21 +124,43 @@ public class MailController {
 	}
 	
 	@PostMapping(value = "mailSend")
-	public String mailSend(Mail mail, Model model, HttpServletRequest request) {
-		Member_OfficeInfo member = ms.ListMember1(mail.getMem_no());
+	public String mailSend(Mail mail, MailFile mailFile, Model model, MultipartFile file1, HttpServletRequest request) throws IOException {
 		System.out.println("MailController Start MailSend...");
+		Member_OfficeInfo member = ms.ListMember1(mail.getMem_no());
+		
+		//첨부파일 insert문
+		String uploadPath = request.getSession().getServletContext().getRealPath("/upload/");
+		String savedName = uploadFile(file1.getOriginalFilename(), file1.getBytes(), uploadPath);
+		
+		mailFile.setMail_org_name(file1.getOriginalFilename());
+		mailFile.setMail_save_name(savedName);
+		mailFile.setMail_size(file1.getSize());		
+		
 		mail.setMem_id(member.getMem_id());
 		int result = ms.insert(mail);
+		int resultFile = ms.insertFile(mailFile);
 		//if(result > 0) return "redirect:sen_mailList";
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("member", member);
 		System.out.println(member.getMem_id());
 		//model.addAttribute("mem_id", member.getMem_id());
-		
+	
 		return "forward:sen_mailList";
 	}
 	
+	private String uploadFile(String originalname, byte[] fileData, String uploadPath) throws IOException {
+		 UUID uid = UUID.randomUUID();
+		 File fileDirectory = new File(uploadPath);
+		 if(!fileDirectory.exists()) {
+			 fileDirectory.mkdirs();
+		 }
+		 String savedName = uid.toString() + "_" + originalname;
+		 File target = new File(uploadPath, savedName);
+		 FileCopyUtils.copy(fileData, target);
+		return savedName;
+	}
+
 	@GetMapping(value = "mailDetail")
 	public String mailDetail(HttpServletRequest request, int mail_no, Model model) {
 		System.out.println("MailController Start mailDetail....");

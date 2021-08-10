@@ -18,7 +18,7 @@ ul li {list-style-type: none;}
 </style>
 </head>
 <body>
-${member.mem_id} - ${member.mem_no } - ${member.mem_status}
+${member.mem_id} - ${member.mem_no } - ${member.mem_status} / <a href="main?mem_no=${sessionScope.mem_no }">Go Main</a>
  <h1>받은 메일함</h1>
  <c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 <div>

@@ -3,8 +3,15 @@
 	<typeAliases>
 		<typeAlias alias="Mail"  	type="com.oracle.s20210702.model.Mail"/>
 		<typeAlias alias="Member"  	type="com.oracle.s20210702.model.Member_OfficeInfo"/>
-		<typeAlias alias="ChatRoom"  	type="com.oracle.s20210702.model.ChatRoom"/>
-		<typeAlias alias="ChatMessage"  	type="com.oracle.s20210702.model.ChatMessage"/>
+		<typeAlias alias="Board"  	type="com.oracle.s20210702.model.Board"/>
+		<typeAlias alias="WM"  	type="com.oracle.s20210702.model.WorkManagement"/>
+		<typeAlias alias="MemVO"  	type="com.oracle.s20210702.model.MemVO1"/>
+		<typeAlias alias="CalData"  	type="com.oracle.s20210702.model.CalData"/>
+		<typeAlias alias="Schedule"  	type="com.oracle.s20210702.model.Schedule"/>
+		<typeAlias alias="ChatRoom"     type="com.oracle.s20210702.model.ChatRoom"/>
+      	<typeAlias alias="ChatMessage"     type="com.oracle.s20210702.model.ChatMessage"/>
+		
+		
 	</typeAliases>
 
 

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import com.oracle.s20210702.dao.MailDao;
 import com.oracle.s20210702.model.Mail;
+import com.oracle.s20210702.model.MailFile;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 
 
@@ -148,6 +149,14 @@ public class MailServiceImpl implements MailService {
 		int k = 0;
 		k = md.mailDelete(mail_no);
 		return k;
+	}
+
+	@Override
+	public int insertFile(MailFile mailFile) {
+		int result = 0;
+		result = md.insert(mailFile);
+		
+		return result;
 	}
 
 	

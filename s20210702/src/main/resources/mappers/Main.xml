@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MainDao">
+	<select id="ssMainPfView" parameterType="String" resultType="Member">
+	SELECT m.MEM_NO , m.MEM_ID ,m.MEM_NAME, m.MEM_RANK, t.TEAM_NAME FROM MEMBER_OFFICEINFO m ,TEAM t WHERE t.TEAM_NO=m.TEAM_NO and t.DEPT_NO = m.DEPT_NO and MEM_NO = #{mem_no}
+	</select>
+
+	<select id="ssVacaCheck" parameterType="String" resultType="float">
+		select sum(round(((to_char( SCHEDULE_END, 'yyyymmddHH24' )-to_char( SCHEDULE_START, 'yyyymmddHH24' ))/100),0)+round(2*mod(to_char( SCHEDULE_END, 'yyyymmddHH24' )-to_char( SCHEDULE_START, 'yyyymmddHH24' ),100),-1)/20) vacasum from SCHEDULE where mem_no = #{mem_no}  and SCHEDULE_KIND=1
+	</select>
+
+	<select id="ssRankCheck" resultType="String" parameterType="String">
+	select MEM_RANK from MEMBER_OFFICEINFO where mem_no = #{mem_no}
+	</select>
+
+</mapper>

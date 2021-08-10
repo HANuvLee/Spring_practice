@@ -60,14 +60,15 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
  
         // 전달받은 메세지
         String msg = message.getPayload();
-        
+        System.out.println(msg);
         // Json객체 → Java객체
         // 출력값 : [roomId=123, messageId=null, message=asd, name=천동민, email=cheon@gmail.com, unReadCount=0]
         ChatMessage chatMessage = objectMapper.readValue(msg,ChatMessage.class);
         System.out.println("SocketHandler handleTextMessage chatMessage.getRoom_no -> " + chatMessage.getRoom_no());
-        
+        System.out.println(chatMessage);
         // 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
         ChatRoom chatRoom = cService.selectChatRoom(chatMessage.getRoom_no());
+        System.out.println(chatRoom);
         
         // 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때
         // 채팅방 생성
@@ -83,25 +84,28 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             RoomList.put(chatRoom.getRoom_no(), sessionTwo);
             // 확인용
             System.out.println("채팅방 생성");
+            System.out.println(RoomList);
+            System.out.println(sessionList);
         }
         
         // 채팅방이 존재 할 때
         else if(RoomList.get(chatRoom.getRoom_no()) != null && chatMessage.getMessage_content().equals("ENTER-CHAT") && chatRoom != null) {
-            
+            System.out.println("a");
             // RoomList에서 해당 방번호를 가진 방이 있는지 확인.
             RoomList.get(chatRoom.getRoom_no()).add(session);
             // sessionList에 추가
             sessionList.put(session, chatRoom.getRoom_no());
             // 확인용
             System.out.println("생성된 채팅방으로 입장");
+            System.out.println(chatMessage.getMessage_content());
         }
         
         // 채팅 메세지 입력 시
         else if(RoomList.get(chatRoom.getRoom_no()) != null && !chatMessage.getMessage_content().equals("ENTER-CHAT") && chatRoom != null) {
-            
+            System.out.println("b");
             // 메세지에 이름, 이메일, 내용을 담는다.
             TextMessage textMessage = new TextMessage(chatMessage.getSen_message_name() + "," + chatMessage.getSen_message_id() + "," + chatMessage.getMessage_content());
-            
+            System.out.println(chatMessage.getMessage_content());
             // 현재 session 수
             int session_count = 0;
  
@@ -115,7 +119,7 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             // sessionCount == 2 일 때는 unReadCount = 0,
             // sessionCount == 1 일 때는 unReadCount = 1
             chatMessage.setSession_count(session_count);
-            
+            System.out.println(chatMessage);
             // DB에 저장한다.
             int a = cService.insertMessage(chatMessage);
             
@@ -124,7 +128,9 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             }else {
                 System.out.println("메세지 전송 실패!!! & DB 저장 실패!!");
             }
+            System.out.println("c");
         }
+        System.out.println("d");
     }
     
     @Override

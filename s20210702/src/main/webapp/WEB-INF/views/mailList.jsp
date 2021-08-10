@@ -19,9 +19,9 @@ ul li {list-style-type: none;}
 </head>
 <body>
 <form action="">
-	<input type="button" value="메세지">
+	<input type="button" value="채팅">
 </form>
-${member.mem_id} - ${member.mem_no } - ${member.mem_status}
+${member.mem_id} - ${member.mem_no } - ${member.mem_status} / <a href="main?mem_no=${sessionScope.mem_no }">Go Main</a>
  <h1>전체 메일함</h1>
  <c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 <div>

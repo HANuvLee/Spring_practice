@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CalData">
+<select id="ssTodoCnt" parameterType="CalData" resultType="int">	
+select count(schedule_start) from SCHEDULE 
+where mem_no = #{mem_no}
+and to_date((#{targetDateString}),'YYYYMMDD') between (SCHEDULE_START-1) and (SCHEDULE_END)
+</select>
+
+<select id="ssScheduleList" parameterType="CalData" resultType="Schedule">
+select * from SCHEDULE 
+where mem_no = #{mem_no}
+and (to_date((#{targetDateString}),'YYYYMMDD') between (SCHEDULE_START-1) and (SCHEDULE_END))
+
+
+</select>
+
+<insert id="ssScheIns" parameterType="Schedule">
+INSERT INTO SCHEDULE VALUES (#{schedule_kind},sch_seq.nextval,#{schedule_name},TO_DATE(#{schedule_start},'YYYYMMDDHH24'),TO_DATE(#{schedule_end},'YYYYMMDDHH24'),#{schedule_content}, #{mem_no})
+
+</insert>
+
+<select id="ssdccheck" parameterType="Schedule" resultType="int">
+SELECT count(SCHEDULE_NO) FROM SCHEDULE WHERE MEM_NO = #{mem_no} and SCHEDULE_NO = #{schedule_no} and ( (SCHEDULE_END - SYSDATE) >1 )
+</select>
+
+<update id="ssupSche" parameterType="Schedule">
+UPDATE SCHEDULE SET SCHEDULE_NAME = 'Del Request' , SCHEDULE_CONTENT = TO_CHAR(SYSDATE,'yyyy-MM-dd hh24:mm:ss') WHERE MEM_NO=#{mem_no} AND SCHEDULE_NO=#{schedule_no}
+
+</update>
+</mapper>
+
+

@@ -50,18 +50,34 @@
 		where MEM_ID = #{mem_id} and YOU_ID = #{you_id}
 	</select>
 	
-	<insert id="hhinsertroom" parameterType="ChatRoom">
-		insert into chat_room values(SEQ_CHATROOM_NO.NEXTVAL, #{mem_id}, #{mem_name}, DEFAULT, #{you_id}, #{you_name})
+	<insert id="hhinsertChatroom" parameterType="Map">
+		insert into chat_room 
+		values(SEQ_CHATROOM_NO.NEXTVAL, 
+				(select mem_id from MEMBER_OFFICEINFO where mem_name = #{mem_name}), 
+				#{mem_name},  
+				(select mem_id from MEMBER_OFFICEINFO where mem_name = #{you_name}), 
+				#{you_name}, 
+				DEFAULT)
 	</insert>
 	
 	<select id="hhchatroomlist" parameterType="string" resultMap="chatRoomResultSet">
 		select * from chat_room
-		where MEM_ID = #{mem_id} or YOU_ID = #{you_id}
+		where MEM_id = #{mem_id} or YOU_ID = #{mem_id}
 	</select>
 	
 	<select id="hhselectunreadcount" parameterType="ChatMessage" resultType="int">
 		select count(*) from chat_message
 		where ROOM_NO = #{room_no} and SEN_MESSAGE_ID != #{sen_message_id} and UNREAD_COUNT = 1
+	</select>
+	
+	<select id="hhselectroom_no" parameterType="Map" resultType="String">
+		select room_no from chat_room
+		where MEM_NAME = #{mem_name}
+		and YOU_NAME = #{you_name}
+		UNION
+		select room_no from chat_room
+		where MEM_NAME = #{you_name}
+		and YOU_NAME = #{mem_name}
 	</select>
 
 </mapper>

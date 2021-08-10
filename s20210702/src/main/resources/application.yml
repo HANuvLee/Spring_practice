@@ -1,10 +1,6 @@
 # http port set
 server:
   port: 8518
-#  servlet: 
-#      jsp: 
-#        init-parameters: 
-#          development: true
 
 spring:
   # File Size
@@ -19,10 +15,9 @@ spring:
     username: S20210702
     password: tiger
     driver-class-name: oracle.jdbc.driver.OracleDriver
-      
  
   # ORM JPA
-  jpa: 
+  jpa:
     hibernate:
       ddl-auto: none # create
     properties:

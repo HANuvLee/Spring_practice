@@ -1,8 +1,9 @@
 package com.oracle.s20210702.controller;
 
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.oracle.s20210702.model.ChatSession;
+import com.oracle.s20210702.model.MemVO1;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 import com.oracle.s20210702.service.LoginService;
+import com.oracle.s20210702.service.WorkManagementService;
 
 @Controller
 public class LoginController {
@@ -24,6 +27,9 @@ public class LoginController {
 	@Autowired
 	private LoginService ls;
 	
+	@Autowired
+	private WorkManagementService wms;
+	
 	@GetMapping(value = "loginForm") 
 	public String loginFrom() {
 	return "loginForm";
@@ -33,31 +39,29 @@ public class LoginController {
 	@PostMapping(value = "login")
 	public String login(Member_OfficeInfo mo, Model model, HttpServletRequest request){
 		System.out.println("LoginController login Start...");
-		System.out.println("LoginController Login mo.mem_id->" + mo.getMem_id());
 		int result = ls.login(mo);
 		System.out.println("member_id ->" + mo.getMem_id());
 		System.out.println("LoginController result->" + result);
 		Member_OfficeInfo member = ls.member(mo.getMem_id());
+		model.addAttribute("mem_no", member.getMem_no());
 		if(result == 0) 
-			return "forward:loginForm";
+			return "redirect:loginForm";
 		
 		else {
-		
+		model.addAttribute("mem_id", member.getMem_id());
+		model.addAttribute("mem_no", member.getMem_no());
 		
 		
 
-		System.out.println("login member.getMem_id() ->" + member.getMem_id());
-		System.out.println("login member.getMem_no() ->" + member.getMem_no());
-		System.out.println("login member ->" + member);
+		System.out.println("22222->" + member.getMem_id());
+		System.out.println("22222->" + member.getMem_no());
+		
 		HttpSession session = request.getSession();
+		session.setAttribute("mem_no", member.getMem_no());
 		session.setAttribute("member", member);
-		//model.addAttribute("member", member);
-		session.setAttribute("mem_id", mo.getMem_id());
-		
-		//cSession.addmember(member.getMem_id());
-		//session.setAttribute("mem_no", member.getMem_no());
 
-		return "forward:mailList";
+	
+		return "forward:main?mem_no="+member.getMem_no();
 		}
 	}
 

@@ -22,6 +22,12 @@ public interface ChatDao {
 	List<ChatRoom> 		ChatRoomList(String mem_id);
 
 	int 				selectUnReadCount(ChatMessage message);
+
+	String 		selectroom_no(String you_name, String mem_name);
+
+	String 		insertChatroom(String you_name, String mem_name);
+	
+	
 	
 	
 

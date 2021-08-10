@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import com.oracle.s20210702.model.Mail;
+import com.oracle.s20210702.model.MailFile;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 
 public interface MailService {
@@ -34,6 +35,9 @@ public interface MailService {
 	int 				eraseMail(int mail_no);
 	int 				restoreMail(int mail_no);
 	int					mailDelete(int mail_no);
+	
+	//첨부파일
+	int 				insertFile(MailFile mailFile);
 	
 	
 	

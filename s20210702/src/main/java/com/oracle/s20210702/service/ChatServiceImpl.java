@@ -79,4 +79,17 @@ public class ChatServiceImpl implements ChatService {
 		return uc;
 	}
 
+	@Override
+	public String selectroom_no(String you_name, String mem_name) {
+		System.out.println("ChatServiceImpl selectroom_no start...");
+		String roomList = null;
+		roomList = cd.selectroom_no(you_name, mem_name);
+		if(roomList == null) {
+			System.out.println("채팅방이 없습니다. 채팅방을 생성합니다.");
+			roomList = cd.insertChatroom(you_name, mem_name);
+		}
+		System.out.println("방이 이미 있습니다.");
+		return roomList;
+	}
+
 }

@@ -1,0 +1,25 @@
+package com.oracle.s20210702.model;
+
+import java.util.Date;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class WorkManagement {
+
+	private String mem_no;
+	private int work_seq_num;
+	
+	private Date work_date;
+	private Date work_in_time;
+	private Date work_out_time;
+	
+	//업무시간 관리용
+	private int work_time_avg;
+	private int work_time_sum;
+	private int work_day_cnt;
+	private int overtime;
+	
+}

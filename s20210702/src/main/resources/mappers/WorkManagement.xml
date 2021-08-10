@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkManagementDao">
+
+
+<select id="ssWMCtview" parameterType="String" resultType="WM">
+SELECT * FROM WORK_MANAGEMENT 
+  WHERE MEM_NO = #{mem_no} 
+  and to_char( WORK_DATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
+
+</select>
+
+<select id="ssMaxSeqWork" resultType="int">
+select max(WORK_SEQ_NUM) from WORK_MANAGEMENT
+</select>
+
+<insert id="ssWMInswit" parameterType="String">
+	insert into WORK_MANAGEMENT values (#{mem_no},wsn_seq.nextval,sysdate,sysdate,sysdate)
+</insert>
+
+<update id="ssWMToutUpdate" parameterType="String">
+ UPDATE WORK_MANAGEMENT SET
+  WORK_OUT_TIME = SYSDATE
+  WHERE MEM_NO = #{mem_no}
+  and to_char( WORK_DATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
+</update>
+
+<select id="ssWeeklyWtime" resultType="WM" parameterType="String">
+select round(avg(24*(WORK_OUT_TIME-WORK_IN_TIME)),2)work_time_avg,round(sum(24*(WORK_OUT_TIME-WORK_IN_TIME)),1)work_time_sum, count(WORK_DATE) Work_Day_Cnt, greatest((round((24*(sum(WORK_OUT_TIME-WORK_IN_TIME))-(9*(count(WORK_DATE)))),1)),0) overtime  from WORK_MANAGEMENT where mem_no =#{mem_no} and
+  (TO_CHAR(WORK_DATE, 'yyyymmdd') BETWEEN (TO_CHAR(TRUNC(sysdate,'d'),'yyyymmdd')) and (TO_CHAR(TRUNC(sysdate,'d')+6,'yyyymmdd')))
+
+</select>
+
+<select id="ssCCheckToday" parameterType="String" resultType="int">
+	select count(WORK_IN_TIME) from WORK_MANAGEMENT where to_char( WORK_DATE, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') and MEM_NO = #{mem_no}
+	
+</select>
+
+
+</mapper>

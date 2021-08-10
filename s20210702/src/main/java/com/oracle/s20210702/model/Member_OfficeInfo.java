@@ -19,5 +19,9 @@ public class Member_OfficeInfo {
 	private Date mem_quit_date;
 	private String mem_status;
 	private String mem_tel;
+	
+	// main page용
+	private String team_name;
 
+	
 }

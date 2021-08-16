@@ -29,7 +29,7 @@
 		<if test="session_count == 1">
 			insert into chat_Message values(SEQ_CHATMESSAGE_NO.NEXTVAL, #{room_no}, #{message_content}, #{sen_message_name}, #{sen_message_id}, DEFAULT)
 		</if>
-		<if test="session_count == 2">
+        <if test="session_count == 2">
 			insert into chat_Message values(SEQ_CHATMESSAGE_NO.NEXTVAL, #{room_no}, #{message_content}, #{sen_message_name}, #{sen_message_id}, 0)
 		</if>
 	</insert>
@@ -37,6 +37,7 @@
 	<select id="hhmessagelist" parameterType="string" resultMap="chatMessageResultSet">
 		SELECT * FROM CHAT_MESSAGE
         WHERE ROOM_NO = #{rooom_no}
+        order by message_no
 	</select>
 	
 	<update id="hhupdatecount" parameterType="ChatMessage">
@@ -51,13 +52,16 @@
 	</select>
 	
 	<insert id="hhinsertChatroom" parameterType="Map">
-		insert into chat_room 
-		values(SEQ_CHATROOM_NO.NEXTVAL, 
-				(select mem_id from MEMBER_OFFICEINFO where mem_name = #{mem_name}), 
-				#{mem_name},  
-				(select mem_id from MEMBER_OFFICEINFO where mem_name = #{you_name}), 
-				#{you_name}, 
-				DEFAULT)
+		
+
+			insert into chat_room 
+			values(SEQ_CHATROOM_NO.NEXTVAL, 
+					(select mem_id from MEMBER_OFFICEINFO where mem_name = #{mem_name}), 
+					#{mem_name},  
+					(select mem_id from MEMBER_OFFICEINFO where mem_name = #{you_name}), 
+					#{you_name}, 
+					DEFAULT)
+		
 	</insert>
 	
 	<select id="hhchatroomlist" parameterType="string" resultMap="chatRoomResultSet">
@@ -79,5 +83,30 @@
 		where MEM_NAME = #{you_name}
 		and YOU_NAME = #{mem_name}
 	</select>
+	
+	<select id="hhalluser" resultType="String">
+		select mem_name from MEMBER_OFFICEINFO
+	</select>
+	
+	<select id="hhmyroom" resultType="String">
+		select room_no from chat_room
+		where mem_name = #{mem_name}
+		or you_name = #{mem_name}
+	</select>
+	
+	<update id="hhupdatetotalcount" parameterType="ChatMessage">
+		update chat_room a
+		set a.UNREAD_COUNT = (select count(*) from CHAT_MESSAGE m where m.unread_count = 1 and room_no = #{room_no})
+		where a.ROOM_NO = #{room_no}
+	</update>
+	
+	<select id="hhselectmyroomno" parameterType="Map" resultType="int">
+		select COUNT(*) from CHAT_MESSAGE
+		where UNREAD_COUNT = 1
+		and room_no = #{room_no}
+		and SEN_MESSAGE_NAME != #{mem_name}
+	</select>
+	
+	
 
 </mapper>

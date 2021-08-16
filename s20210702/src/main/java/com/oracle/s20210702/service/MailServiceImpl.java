@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 
 import com.oracle.s20210702.dao.MailDao;
 import com.oracle.s20210702.model.Mail;
-import com.oracle.s20210702.model.MailFile;
+import com.oracle.s20210702.model.Mail_File;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 
 
@@ -87,12 +87,12 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public int insert(Mail mail) {
+	public int insert(Mail mail, Mail_File mailFile) {
 		System.out.println("MailServiceImpl insert start...");
 		System.out.println("MailServiceImpl mem_no->" + mail.getMem_no());
 		System.out.println("MailServiceImpl content->" + mail.getMail_content());
 		int result = 0;
-		result = md.insert(mail);
+		result = md.insert(mail, mailFile);
 		
 		return result;
 	}
@@ -150,14 +150,20 @@ public class MailServiceImpl implements MailService {
 		k = md.mailDelete(mail_no);
 		return k;
 	}
+//	->수정
+	@Override
+	public Mail replymail(int mail_no) {
+		Mail mail = null;
+		mail = md.replymail(mail_no);
+		return mail;
+	}
 
 	@Override
-	public int insertFile(MailFile mailFile) {
-		int result = 0;
-		result = md.insert(mailFile);
-		
-		return result;
+	public List<String> allMem_id() {
+		List<String> allMem_id = md.allMem_id();
+		return allMem_id;
 	}
+
 
 	
 }

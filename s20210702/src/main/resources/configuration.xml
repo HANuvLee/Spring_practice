@@ -2,6 +2,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Mail"  	type="com.oracle.s20210702.model.Mail"/>
+		<typeAlias alias="MailFile"  	type="com.oracle.s20210702.model.Mail_File"/>
 		<typeAlias alias="Member"  	type="com.oracle.s20210702.model.Member_OfficeInfo"/>
 		<typeAlias alias="Board"  	type="com.oracle.s20210702.model.Board"/>
 		<typeAlias alias="WM"  	type="com.oracle.s20210702.model.WorkManagement"/>

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import com.oracle.s20210702.model.Mail;
-import com.oracle.s20210702.model.MailFile;
+import com.oracle.s20210702.model.Mail_File;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 
 public interface MailService {
@@ -28,16 +28,19 @@ public interface MailService {
 	Member_OfficeInfo 	ListMember(String mem_id);
 	Member_OfficeInfo 	ListMember1(String mem_no);
 	
-	int 				insert(Mail mail);
+	int 				insert(Mail mail, Mail_File mailFile);
 	
 	Mail 				detail(int mail_no);
 	Member_OfficeInfo 	receiverMember(Mail mail);
 	int 				eraseMail(int mail_no);
 	int 				restoreMail(int mail_no);
 	int					mailDelete(int mail_no);
+//	->수정
+	Mail 				replymail(int mail_no);
+	List<String> 		allMem_id();
 	
-	//첨부파일
-	int 				insertFile(MailFile mailFile);
+	
+	
 	
 	
 	

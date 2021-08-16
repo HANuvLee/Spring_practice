@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s20210702.model.Mail;
+import com.oracle.s20210702.model.Mail_File;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 
 @Repository
@@ -105,18 +106,23 @@ public class MailDaoImpl implements MailDao {
 	}
 
 	@Override
-	public int insert(Mail mail) {
-		System.out.println("MailDaoImpl insert Start ...");		
-		int result = 0;
-		try {
-			result = session.insert("hhInsert", mail);
-		} catch (Exception e) {
-			System.out.println("MailDaoImpl insert Exception->" + e.getMessage());
-		}
-		
-		
-		return result;
-	}
+	   public int insert(Mail mail, Mail_File mailFile) {
+	      System.out.println("MailDaoImpl insert Start ...");      
+	      int result = 0;
+	      int result2 = 0;
+	      try {
+	         result = session.insert("hhInsert", mail);
+	         if (result > 0) {
+	            if(mailFile == null) {
+	               return result;
+	            }
+	            result2 = session.insert("hhInsertMailFile", mailFile);
+	         }
+	      } catch (Exception e) {
+	         System.out.println("MailDaoImpl insert Exception->" + e.getMessage());
+	      }
+	      return result2;
+	   }
 
 	@Override
 	public Member_OfficeInfo listMember(String mem_id) {
@@ -179,8 +185,21 @@ public class MailDaoImpl implements MailDao {
 		k = session.update("hhmailDelete", mail_no);
 		return k;
 	}
-
 	
+//	->수정
+	@Override
+	public Mail replymail(int mail_no) {
+		Mail mail = null;
+		mail = session.selectOne("hhreplymail", mail_no);
+		return mail;
+	}
+
+	@Override
+	public List<String> allMem_id() {
+		List<String> allMem_id = session.selectList("hhallMem_id");
+		return allMem_id;
+	}
+
 	
 	
 

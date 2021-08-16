@@ -3,11 +3,13 @@ package com.oracle.s20210702.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class Mail_File {
 	private int mail_file_no;
 	private int mail_no;
-	private String mail_file_name;
-
+	private String mail_org_name;
+	private String mail_save_name;
+	private long mail_file_size;
+	private int mail_file_open;
 }

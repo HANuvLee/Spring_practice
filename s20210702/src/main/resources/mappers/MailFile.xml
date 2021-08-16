@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mail_File">
+	<select id="hhfileList" parameterType="int" resultType="Mail_File" >
+		select * 
+		from MAIL_FILE 
+		where mail_no = #{mail_no}
+	</select>
+	
+  	<select id="hhmailFileone" parameterType="hashmap" resultType="hashmap">
+		select * from mail_file
+		<where>
+			<if test="null != mail_file_no and '' != mail_file_no">AND mail_file_no = #{mail_file_no}</if> 
+		</where>
+	</select>
+
+
+
+</mapper>
+  

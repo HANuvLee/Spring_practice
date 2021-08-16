@@ -86,6 +86,10 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             System.out.println("채팅방 생성");
             System.out.println(RoomList);
             System.out.println(sessionList);
+            int k = cService.updateCount(chatMessage);
+            int kk = cService.updateTotalCount(chatMessage);
+            
+            
         }
         
         // 채팅방이 존재 할 때
@@ -98,23 +102,37 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             // 확인용
             System.out.println("생성된 채팅방으로 입장");
             System.out.println(chatMessage.getMessage_content());
+            System.out.println(RoomList);
+            System.out.println(sessionList);
+            int k = cService.updateCount(chatMessage);
+            int kk = cService.updateTotalCount(chatMessage);
+            
+            
         }
         
         // 채팅 메세지 입력 시
         else if(RoomList.get(chatRoom.getRoom_no()) != null && !chatMessage.getMessage_content().equals("ENTER-CHAT") && chatRoom != null) {
             System.out.println("b");
-            // 메세지에 이름, 이메일, 내용을 담는다.
-            TextMessage textMessage = new TextMessage(chatMessage.getSen_message_name() + "," + chatMessage.getSen_message_id() + "," + chatMessage.getMessage_content());
-            System.out.println(chatMessage.getMessage_content());
-            // 현재 session 수
             int session_count = 0;
- 
+            for(WebSocketSession sess : RoomList.get(chatRoom.getRoom_no())) {
+            	session_count++;
+            }
+            if(session_count == 1) {
+            	chatMessage.setUnread_count(1);
+            }else  {
+            	chatMessage.setUnread_count(0);
+            }
+            	// 메세지에 이름, 이메일, 내용을 담는다.
+            TextMessage textMessage = new TextMessage(chatMessage.getSen_message_name() + "," + chatMessage.getSen_message_id() + "," + chatMessage.getMessage_content() + "," + chatMessage.getUnread_count());
+            System.out.println(chatMessage.getMessage_content());
+            System.out.println("------------------>"+textMessage.getPayload());
+            // 현재 session 수
+            
             // 해당 채팅방의 session에 뿌려준다.
             for(WebSocketSession sess : RoomList.get(chatRoom.getRoom_no())) {
                 sess.sendMessage(textMessage);
-                session_count++;
             }
-            
+            System.out.println("session_count -> " + session_count);
             // 동적쿼리에서 사용할 sessionCount 저장
             // sessionCount == 2 일 때는 unReadCount = 0,
             // sessionCount == 1 일 때는 unReadCount = 1
@@ -122,6 +140,8 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
             System.out.println(chatMessage);
             // DB에 저장한다.
             int a = cService.insertMessage(chatMessage);
+            int kk = cService.updateTotalCount(chatMessage);
+            System.out.println("----------------------------------------------------" + a);
             
             if(a == 1) {
                 System.out.println("메세지 전송 및 DB 저장 성공");

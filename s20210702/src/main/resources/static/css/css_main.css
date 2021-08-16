@@ -228,7 +228,7 @@ section{
 }
 
 #sc_cont_ur{
-	width: 540px;
+/* 	width: 540px; */
 	height: 670px;
 	margin: 0px;
 	background-color: whitesmoke;
@@ -237,7 +237,7 @@ section{
 }
 
 #sc_msger_box{
-	width: 530px;
+	width: 200px;
 	height: 640px;
 	margin: 10px;
 	margin-left: 0;

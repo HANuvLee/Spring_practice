@@ -143,26 +143,103 @@ public class ChatController {
 	
 	@RequestMapping(value = "updatemessage")
 	@ResponseBody
-	public void updatemessage(HttpServletResponse response, String room_no, String sen_message_id) {
+	public void updatemessage(HttpServletResponse response, String room_no, String sen_message_id) throws JsonIOException, IOException {
+		System.out.println("ChatController updatemessage start...");
 		ChatMessage message = new ChatMessage();
 		message.setSen_message_id(sen_message_id);
 		message.setRoom_no(room_no);
-		System.out.println("1111111111111111111111111111111" + message.getSen_message_id());
-		System.out.println("1111111111111111111111111111111" + message.getRoom_no());
-		cService.updateCount(message);
-		System.out.println("1234");
+		int k = cService.updateCount(message);
+		int kk = cService.updateTotalCount(message);
+		System.out.println("ChatController updatemessage k -->" + k);
+		response.setContentType("application/json; charset=utf-8");
+		 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        gson.toJson(kk,response.getWriter());
 		
 	}
 	
 	@RequestMapping(value = "loginUser")
 	@ResponseBody
-	public void loginUser(HttpServletResponse response) throws JsonIOException, IOException {
+	public void loginUser(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
 		ArrayList<String> chatSessionList = cSession.getLoginUser();
 		
 		response.setContentType("application/json; charset=utf-8");
 		 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         gson.toJson(chatSessionList,response.getWriter());
+	}
+	
+	@RequestMapping(value = "logoutUser")
+	@ResponseBody
+	public void logoutUser(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
+		List<String> allUser = cService.allUser();
+		
+		
+		response.setContentType("application/json; charset=utf-8");
+		 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        gson.toJson(allUser, response.getWriter());
+	}
+	
+	@RequestMapping(value = "loginunread_count")
+	@ResponseBody
+	public void loginunread_count(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
+		System.out.println("ChatController unread_count start...");
+		List<String> allUser = cService.allUser();
+		ArrayList<String> chatSessionList = cSession.getLoginUser();
+		List<String> myroom = new ArrayList<String>();
+		List<Integer> loginroomunread = new ArrayList<Integer>();
+		System.out.println("allUser -> " + allUser);
+		System.out.println(myroom);
+		for(int i = 0; i < chatSessionList.size(); i++) {
+			if(!chatSessionList.get(i).equals(mem_name)) {
+				System.out.println(chatSessionList.get(i));
+				 String allUseri = cService.selectroom_no(chatSessionList.get(i),mem_name);
+				System.out.println(allUseri);
+				myroom.add(allUseri);
+			}
+		} 
+		System.out.println("------------->" + myroom);
+		for(int j = 0; j < myroom.size(); j++) {
+			int totalunread = cService.totalunread(myroom.get(j), mem_name);
+			loginroomunread.add(totalunread);
+		}
+		System.out.println("------->" + loginroomunread);
+		response.setContentType("application/json; charset=utf-8");
+		 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        gson.toJson(loginroomunread, response.getWriter());
+		
+	}
+	
+	@RequestMapping(value = "logoutunread_count")
+	@ResponseBody
+	public void logoutunread_count(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
+		System.out.println("ChatController unread_count start...");
+		List<String> allUser = cService.allUser();
+		ArrayList<String> chatSessionList = cSession.getLoginUser();
+		List<String> myroom = new ArrayList<String>();
+		List<Integer> logoutroomunread = new ArrayList<Integer>();
+		allUser.removeAll(chatSessionList);
+		System.out.println("allUser -> " + allUser);
+		System.out.println(myroom);
+		for(int i = 0; i < allUser.size(); i++) {
+				System.out.println(allUser.get(i));
+				 String allUseri = cService.selectroom_no(allUser.get(i),mem_name);
+				System.out.println(allUseri);
+				myroom.add(allUseri);
+		} 
+		System.out.println("------------->" + myroom);
+		for(int j = 0; j < myroom.size(); j++) {
+			int totalunread = cService.totalunread(myroom.get(j),mem_name);
+			logoutroomunread.add(totalunread);
+		}
+		System.out.println("------->" + logoutroomunread);
+		response.setContentType("application/json; charset=utf-8");
+		 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        gson.toJson(logoutroomunread, response.getWriter());
+		
 	}
 
 }

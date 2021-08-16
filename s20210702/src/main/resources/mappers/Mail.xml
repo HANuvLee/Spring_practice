@@ -137,5 +137,22 @@
 	<delete id="hhmailDelete" parameterType="int">
 		delete from mail where mail_no = #{mail_no}
 	</delete>
+	
+<!-- 	->수정 -->
+	<select id="hhreplymail" parameterType="int" resultType="Mail">
+		select * from mail where mail_no = #{mail_no}
+	</select>
+	
+	<update id="hhdelArray" parameterType="int">
+		update mail set mail_del = 1 where mail_no = #{mail_no}
+	</update>
+	
+	<select id="hhallMem_id" resultType="String">
+		select mem_id  from MEMBER_OFFICEINFO
+	</select>
+	
+	<insert id="hhInsertMailFile" parameterType="MailFile">
+		insert into MAIL_File values(SEQ_MAIL_FILE_NO.NEXTVAL, MAIL_SEQ.CURRVAL, #{mail_org_name}, #{mail_save_name}, #{mail_file_size}, 0)
+	</insert>
   
 </mapper>

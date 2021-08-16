@@ -1,4 +1,20 @@
+.unread0 {
+	display: none;
+}
 
+.alrim {
+	color: white;
+    margin: 3px;
+    background-color: red;
+    border-radius: 50%;
+    padding: 4px;
+    /* display: block; */
+    width: 18;
+    text-align: center;
+    float: right;
+    margin-top: 18px;
+	
+}
 
 .container > .btn {
   margin: 60px;
@@ -44,6 +60,31 @@
   position: relative;
   transition: all .4s ease;
   cursor: pointer;
+  margin-left: 10;
+}
+.js-click-modal1 {
+  background: linear-gradient(to right, #acabab, #000000);
+  padding: 10px 25px;
+  display: inline-block;
+  border-radius: 25px;
+  margin: 10px 0;
+  color: #fff;
+  position: relative;
+  transition: all .4s ease;
+  cursor: pointer;
+  margin-left: 10;
+}
+.js-click-modal2 {
+  background: linear-gradient(to right, #6468ff, #ff6476);
+  padding: 10px 25px;
+  display: inline-block;
+  border-radius: 25px;
+  margin: 10px 0;
+  color: #fff;
+  position: relative;
+  transition: all .4s ease;
+  cursor: pointer;
+  margin-left: 10;
 }
 .btn:hover {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
@@ -81,6 +122,9 @@
 	background-color: #ffff64;
 	border-radius: 15%;
 }
+.left > .message > .unread_message {
+	display: none;
+}
 .left > .message > .msg_content {
 	background-color: #a5e3ff;
 	border-radius: 15%;
@@ -88,4 +132,8 @@
 .left {
 	margin: 5px;	
 }
+.unread_message {
+	font-size: 2px;
+}
+
 

@@ -1,5 +1,6 @@
 package com.oracle.s20210702.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int insertMessage(ChatMessage chatMessage) {
 		System.out.println("ChatServiceImpl insertMessage start...");
+		System.out.println(chatMessage);
 		int result = 0;
 		result = cd.insertMessage(chatMessage);
 		return result;
@@ -90,6 +92,34 @@ public class ChatServiceImpl implements ChatService {
 		}
 		System.out.println("방이 이미 있습니다.");
 		return roomList;
+	}
+
+	@Override
+	public List<String> allUser() {
+		List<String> allUser = null;
+		allUser = cd.allUser();
+		return allUser;
+	}
+
+	@Override
+	public List<String> myroom(String mem_name) {
+		List<String> myroom = null;
+		myroom = cd.myroom(mem_name);
+		return myroom;
+	}
+
+	@Override
+	public int totalunread(String room_no, String mem_name) {
+		int totalunread = 0;
+		totalunread = cd.totalunread(room_no,mem_name);
+		return totalunread;
+	}
+
+	@Override
+	public int updateTotalCount(ChatMessage chatMessage) {
+		int kk = 0;
+		kk = cd.updateTotalCount(chatMessage);
+		return kk;
 	}
 
 }

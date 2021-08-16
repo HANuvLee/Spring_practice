@@ -1,5 +1,6 @@
 package com.oracle.s20210702.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,11 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int insertMessage(ChatMessage chatMessage) {
 		System.out.println("ChatDaoImpl insertMessage start...");
-		return session.insert("hhchatinsert", chatMessage);
+		System.out.println(chatMessage);
+		int message_no = 0;
+		message_no = session.insert("hhchatinsert", chatMessage);
+		System.out.println(message_no);
+		return message_no;
 	}
 
 	@Override
@@ -39,7 +44,8 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int updateCount(ChatMessage message) {
 		System.out.println("ChatDaoImpl update start...");
-		return session.update("hhupdatecount", message);
+		int k = session.update("hhupdatecount", message);
+		return k;
 	}
 
 	@Override
@@ -83,6 +89,36 @@ public class ChatDaoImpl implements ChatDao {
 	    map.put("mem_name", mem_name);
 	    session.insert("hhinsertChatroom", map);
 		return null;
+	}
+
+	@Override
+	public List<String> allUser() {
+		List<String> allUser = null;
+		allUser = session.selectList("hhalluser");
+		return allUser;
+	}
+
+	@Override
+	public List<String> myroom(String mem_name) {
+		List<String> myroom = null;
+		myroom = session.selectList("hhmyroom", mem_name);
+		return myroom;
+	}
+
+	@Override
+	public int totalunread(String room_no,String mem_name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("room_no", room_no);
+	    map.put("mem_name", mem_name);
+		int totalunread = session.selectOne("hhselectmyroomno",map);
+		return totalunread;
+	}
+
+	@Override
+	public int updateTotalCount(ChatMessage chatMessage) {
+		int kk = 0;
+		kk = session.update("hhupdatetotalcount", chatMessage);
+		return kk;
 	}
 
 }

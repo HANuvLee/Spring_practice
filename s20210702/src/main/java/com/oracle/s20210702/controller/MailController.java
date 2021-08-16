@@ -1,39 +1,54 @@
 package com.oracle.s20210702.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.s20210702.model.Mail;
-import com.oracle.s20210702.model.MailFile;
+import com.oracle.s20210702.model.Mail_File;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 import com.oracle.s20210702.service.LoginService;
+import com.oracle.s20210702.service.MailFileService;
 import com.oracle.s20210702.service.MailService;
 import com.oracle.s20210702.service.Paging;
 
 @Controller
 public class MailController {
+	private static final Logger logger = LoggerFactory.getLogger(MailController.class);
+	
 	@Autowired
 	private MailService ms;
 	@Autowired
 	private LoginService ls;
-	
+	@Autowired
+	private MailFileService fs;
 	
 	@RequestMapping(value = "mailList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String mailList(Mail mail, String currentPage, Model model, String mem_id, HttpServletRequest request) {
@@ -124,31 +139,41 @@ public class MailController {
 	}
 	
 	@PostMapping(value = "mailSend")
-	public String mailSend(Mail mail, MailFile mailFile, Model model, MultipartFile file1, HttpServletRequest request) throws IOException {
+	public String mailSend(Mail mail, Mail_File mailFile, Model model, HttpServletRequest request, MultipartFile file1) throws IOException {
 		System.out.println("MailController Start MailSend...");
-		Member_OfficeInfo member = ms.ListMember1(mail.getMem_no());
+		Member_OfficeInfo mo = ms.ListMember1(mail.getMem_no());
 		
-		//첨부파일 insert문
-		String uploadPath = request.getSession().getServletContext().getRealPath("/upload/");
+//		==================================첨부파일 insert문==========================================
+		String uploadPath = ("C:\\Spring\\SpringSrc3914\\s20210702\\upload");
+		System.out.println(uploadPath);
 		String savedName = uploadFile(file1.getOriginalFilename(), file1.getBytes(), uploadPath);
 		
 		mailFile.setMail_org_name(file1.getOriginalFilename());
 		mailFile.setMail_save_name(savedName);
-		mailFile.setMail_size(file1.getSize());		
+		mailFile.setMail_file_size(file1.getSize());
 		
-		mail.setMem_id(member.getMem_id());
-		int result = ms.insert(mail);
-		int resultFile = ms.insertFile(mailFile);
-		//if(result > 0) return "redirect:sen_mailList";
-		
+		List<String> allMem_id = ms.allMem_id();
+		System.out.println(allMem_id);
+		int k = allMem_id.indexOf(mail.getMail_receiver());
+		System.out.println(k);
 		HttpSession session = request.getSession();
-		session.setAttribute("member", member);
-		System.out.println(member.getMem_id());
-		//model.addAttribute("mem_id", member.getMem_id());
-	
-		return "forward:sen_mailList";
+		session.setAttribute("member", mo);
+		if(k >= 0) {
+			mail.setMem_id(mo.getMem_id());
+			int result = ms.insert(mail, mailFile);
+			model.addAttribute("k", k);
+			model.addAttribute("mo", mo);
+			return "tandf";
+		}else {
+				
+			System.out.println(mo.getMem_id());
+			model.addAttribute("mo", mo);
+			model.addAttribute("k", k);
+			return "tandf";
+		}
 	}
 	
+//	=================================mailSend uploadFile 호출================================================
 	private String uploadFile(String originalname, byte[] fileData, String uploadPath) throws IOException {
 		 UUID uid = UUID.randomUUID();
 		 File fileDirectory = new File(uploadPath);
@@ -160,19 +185,48 @@ public class MailController {
 		 FileCopyUtils.copy(fileData, target);
 		return savedName;
 	}
-
+	
 	@GetMapping(value = "mailDetail")
 	public String mailDetail(HttpServletRequest request, int mail_no, Model model) {
 		System.out.println("MailController Start mailDetail....");
 		System.out.println(mail_no);
 		Mail mail = ms.detail(mail_no);
+		Mail_File mailFile = fs.fileList(mail_no);
+		
 		Member_OfficeInfo mo = ms.receiverMember(mail);
 		System.out.println("MailController mo rank->" + mo.getMem_rank());
 		System.out.println("MailController mo name->" + mo.getMem_name());
+		model.addAttribute("mailFile", mailFile);
 		model.addAttribute("mail", mail);
 		model.addAttribute("mo", mo);
 		
 		return "mailDetail";
+	}
+// =====================================파일 다운로드=======================================
+	@RequestMapping(value = "fileDown", method = {RequestMethod.GET, RequestMethod.POST})
+	public void fileDown(HttpServletResponse response, @RequestParam Map<String, Object> param, ModelMap model) throws IOException {
+		try {
+			fs.one(param, model);
+			Map<String, Object> mailFile = (Map<String, Object>) model.get("mailFile");	
+			String fileName = new String(mailFile.get("MAIL_SAVE_NAME").toString().getBytes("euc-kr"),"iso-8859-1");
+			System.out.println(fileName);
+			File file = new File("C:\\Spring\\SpringSrc3914\\s20210702\\upload\\"+mailFile.get("MAIL_SAVE_NAME"));
+			System.out.println(file);
+			String mimeType= URLConnection.guessContentTypeFromName(fileName);
+			System.out.println(mimeType);
+			if(mimeType==null) {
+				mimeType = "application/octet-stream";
+			}
+			response.setContentType(mimeType);
+			response.setHeader("Content-Disposition", "attachment; fileName=\""+fileName+"\"");
+			response.setContentLength((int)file.length());
+
+			InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+
+		} catch (Exception e) {
+			logger.error( e.toString(), e );
+		}
 	}
 	
 	@PostMapping(value = "eraseMail")
@@ -198,5 +252,64 @@ public class MailController {
 	public String mailDelete(int mail_no, Model model) {
 		int k = ms.mailDelete(mail_no);
 		return "forward:del_mailList";
+	}
+	
+//	->수정
+	@RequestMapping(value = "replyMail")
+	public String replymail(int mail_no, Model model) {
+		System.out.println("MailController reply start...");
+		System.out.println(mail_no);
+		Mail mail = ms.replymail(mail_no);
+		System.out.println("replymail mem_no -> " + mail.getMem_no());
+		Member_OfficeInfo mo = ms.ListMember1(mail.getMem_no());
+		model.addAttribute("sender", mo);
+		model.addAttribute("mail", mail);
+		
+		return "mailreply";
+	}
+	
+	@GetMapping(value = "mailtome")
+	public String mailtome(Model model, String mem_id, HttpServletRequest request) {
+		System.out.println("MailController mailtome start.." );
+		System.out.println("mem_id" + mem_id);
+		Member_OfficeInfo mo = ms.ListMember(mem_id);
+		model.addAttribute("mo", mo);
+		return "mailtome";
+	}
+	
+	@RequestMapping(value = "delArray")
+	@ResponseBody
+	public int delArry(@RequestParam(value="delArray[]") List<Integer> delArray, Mail mail) {
+		System.out.println("MailController tandf start...");
+		System.out.println(delArray);
+		int y = delArray.size();
+		for(int i = 0; i < delArray.size(); i++) {
+			int k = ms.eraseMail(delArray.get(i));
+		}
+		return y;
+	}
+	
+	@RequestMapping(value = "allrestoreMail")
+	@ResponseBody
+	public int allrestoreMail(@RequestParam(value="delArray[]") List<Integer> delArray, Mail mail) {
+		System.out.println("MailController tandf start...");
+		System.out.println(delArray);
+		int y = delArray.size();
+		for(int i = 0; i < delArray.size(); i++) {
+			int k = ms.restoreMail(delArray.get(i));
+		}
+		return y;
+	}
+	
+	@RequestMapping(value = "alldelMail")
+	@ResponseBody
+	public int alldelMail(@RequestParam(value="delArray[]") List<Integer> delArray, Mail mail) {
+		System.out.println("MailController tandf start...");
+		System.out.println(delArray);
+		int y = delArray.size();
+		for(int i = 0; i < delArray.size(); i++) {
+			int k = ms.mailDelete(delArray.get(i));
+		}
+		return y;
 	}
 }

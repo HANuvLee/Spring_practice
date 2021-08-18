@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+.main_cal_table{
+	width : 100%;
+	
+	border: 2px solid black;
+	border-collapse: collapse;
+	margin-left: 40px;
+}
+
+.main_cal_table tr th{
+	border: 1px solid gray;
+	height: 40px;
+	
+}
+
+.main_cal_table tr td{
+	border: 1px dashed gray;
+
+	height: 120px;
+	vertical-align: top;
+}
+
+.sunday{
+	color: red;
+	background-color: rgba(240,240,240,0.4);
+}
+
+.saturday{ 
+	color: gray;
+	background-color: rgba(240,240,240,0.4);
+}
+
+.tododay{
+	background-color: rgba(245,245,220,0.4);
+}
+
+.today{
+	background-color: rgba(203,255,203,0.6);
+}
+
+.normalday{
+	background-color: white;
+}

@@ -5,21 +5,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="css/css_main.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<script src="https://kit.fontawesome.com/29ccb048c9.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="resources/css/mailbox.css">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </head>
 <body>
-<h1>답장하기</h1>
-${sender.mem_id }
-${mo.mem_no }
-${mo.mem_id }
-${member.mem_id} / <a href="main?mem_no=${sessionScope.mem_no }">Go Main</a>
-<form action="mailSend" method="post">
-	<input type="hidden" name="mem_id" value="${member.mem_id }">
-	<input type="hidden" name="mem_no" value="${member.mem_no }">
-	받는사람 : <input type="text" id="mail_receiver" name="mail_receiver" value="${sender.mem_id }"> @ damoware.com<p>
-	제목 : <input type="text" id="mail_title" name="mail_title"><p>
-	내용 : <textarea rows="20" cols="20" id="mail_content" name="mail_content" placeholder="">${mail.mail_content}&#13;&#10;--------------------&#13;&#10;답장 : </textarea><p>
-	첨부파일
-	<input type="submit" value="보내기">
-</form>
+<div class="body">
+<%@ include file="/WEB-INF/viewpart/header.jsp"%>
+	<div id="sc_cont_up">
+		<div id="writebox">
+		<%@ include file="/WEB-INF/viewpart/mailbox.jsp"%>
+			<div>
+			<form action="mailSend" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+				<p><input type="submit" value="보내기"></p>
+				<input type="hidden" name="mem_id" value="${sender.mem_id }">
+				<input type="hidden" name="mem_no" value="${sender.mem_no }">
+				<p>받는사람&nbsp;&nbsp;&nbsp;<input type="text" id="mail_receiver" name="mail_receiver" value="${sender.mem_id }" style="width: 615px; margin: 20px;"> @ damoware.com</p>
+				<p>제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="mail_title" name="mail_title" style="width: 615px; margin: 20px;"></p>
+				<p>파일첨부&nbsp;&nbsp; 
+					<input type="file" id="file" name="file1" style="margin: 20px;"></p>
+					<input type="hidden" name="path" value="${pageContext.request.contextPath}/resources/img/">
+				<p style="margin: 20px;">내용</p><textarea rows="20" cols="100" id="mail_content" name="mail_content">${mail.mail_content}&#13;&#10;--------------------&#13;&#10;답장 : </textarea><p>
+				
+					
+			</form>
+			</div>
+		</div>
+	</div>
+<%@ include file="/WEB-INF/viewpart/footer.jsp"%>
+</div>
 </body>
 </html>

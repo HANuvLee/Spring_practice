@@ -2,6 +2,8 @@ package com.oracle.s20210702.model;
 
 
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +19,7 @@ public class Schedule {
 	private String schedule_end;
 	private String schedule_content;
 	private String mem_no;
+	
+	//vacaday 연산용...
+	private float vday;
 }

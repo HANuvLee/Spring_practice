@@ -1,5 +1,7 @@
 package com.oracle.s20210702.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.oracle.s20210702.model.WorkManagement;
@@ -17,5 +19,11 @@ public interface WorkManagementDao {
 	WorkManagement 				weeklyworktime(String mem_no);
 
 	int 												ccheck(String mem_no);
+
+	WorkManagement 				todayworktime(String mem_no);
+
+	WorkManagement 				wctcheck(String targetDateString, String mem_no);
+
+	
 
 }

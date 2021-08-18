@@ -138,7 +138,7 @@ public class MailDaoImpl implements MailDao {
 	
 	@Override
 	public Member_OfficeInfo listMember1(String mem_no) {
-		System.out.println("MailDaoImpl mem_id->" + mem_no);
+		System.out.println("MailDaoImpl mem_no->" + mem_no);
 		Member_OfficeInfo mo = null;
 		try {
 			mo = session.selectOne("hhMember1", mem_no);

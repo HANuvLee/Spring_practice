@@ -31,9 +31,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.oracle.s20210702.model.ChatMessage;
+import com.oracle.s20210702.model.ChatRoom;
+import com.oracle.s20210702.model.ChatSession;
 import com.oracle.s20210702.model.Mail;
 import com.oracle.s20210702.model.Mail_File;
 import com.oracle.s20210702.model.Member_OfficeInfo;
+import com.oracle.s20210702.service.ChatService;
 import com.oracle.s20210702.service.LoginService;
 import com.oracle.s20210702.service.MailFileService;
 import com.oracle.s20210702.service.MailService;
@@ -49,6 +56,10 @@ public class MailController {
 	private LoginService ls;
 	@Autowired
 	private MailFileService fs;
+	@Autowired
+    private ChatService cService;	
+	@Autowired
+    private ChatSession cSession;
 	
 	@RequestMapping(value = "mailList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String mailList(Mail mail, String currentPage, Model model, String mem_id, HttpServletRequest request) {
@@ -141,6 +152,7 @@ public class MailController {
 	@PostMapping(value = "mailSend")
 	public String mailSend(Mail mail, Mail_File mailFile, Model model, HttpServletRequest request, MultipartFile file1) throws IOException {
 		System.out.println("MailController Start MailSend...");
+		System.out.println("mail.getMem_no -> " + mail.getMem_no());
 		Member_OfficeInfo mo = ms.ListMember1(mail.getMem_no());
 		
 //		==================================첨부파일 insert문==========================================
@@ -191,13 +203,19 @@ public class MailController {
 		System.out.println("MailController Start mailDetail....");
 		System.out.println(mail_no);
 		Mail mail = ms.detail(mail_no);
+		HttpSession session = request.getSession();
+		String mem_no = (String) session.getAttribute("mem_no");
+		Member_OfficeInfo mo = ms.ListMember1(mem_no);
+		System.out.println(mo.getMem_no());
 		Mail_File mailFile = fs.fileList(mail_no);
 		
-		Member_OfficeInfo mo = ms.receiverMember(mail);
-		System.out.println("MailController mo rank->" + mo.getMem_rank());
-		System.out.println("MailController mo name->" + mo.getMem_name());
+		Member_OfficeInfo receiverMember = ms.receiverMember(mail);
+		System.out.println("MailController mo rank->" + receiverMember.getMem_rank());
+		System.out.println("MailController mo name->" + receiverMember.getMem_name());
+		System.out.println("MailController mail mem_no ->" + mail.getMem_no());
 		model.addAttribute("mailFile", mailFile);
 		model.addAttribute("mail", mail);
+		model.addAttribute("receiverMember", receiverMember);
 		model.addAttribute("mo", mo);
 		
 		return "mailDetail";

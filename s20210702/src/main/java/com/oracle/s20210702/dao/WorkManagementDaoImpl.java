@@ -1,9 +1,12 @@
 package com.oracle.s20210702.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s20210702.model.CalData;
 import com.oracle.s20210702.model.WorkManagement;
 
 @Repository
@@ -121,6 +124,39 @@ public class WorkManagementDaoImpl implements WorkManagementDao {
 		
 		return cresult;
 	}
+
+	// 금일 근무시간(sysdate 대비)
+	@Override
+	public WorkManagement todayworktime(String mem_no) {
+		WorkManagement wm3 = new WorkManagement();
+		try {
+			wm3 = session.selectOne("ssTodayWt",mem_no);
+		} catch (Exception e) {
+			System.out.println("wmdi Exception ==>" + e.getMessage());
+		}
+		
+		return wm3;
+	}
+
+	// 금주 출퇴 시간 체크
+	@Override
+	public WorkManagement wctcheck(String targetDateString, String mem_no) {
+		CalData cal5 = new CalData();
+		cal5.setTargetDateString(targetDateString);
+		cal5.setMem_no(mem_no);
+		System.out.println("test targetDateString -->"+targetDateString);
+		
+		WorkManagement wm5 = new WorkManagement();
+		try {
+			wm5=session.selectOne("ssWctCheck",cal5);
+		} catch (Exception e) {
+			System.out.println("WMDI wctcheck  EXCEPTION ==>" + e.getMessage());
+		}
+		
+		return wm5;
+	}
+
+
 
 	
 	

@@ -131,8 +131,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public int insert1(Board board) {
 		int insresult = 0;
 		System.out.println("Board Dao IMPL insert1 start");
+		System.out.println(board.getMem_no());
+		System.out.println(board.getPost_no());
+		System.out.println(board.getPost_title());
+		System.out.println(board.getPost_content());
 		try {
-			insresult = session.insert("ssinsert1",board);
+			insresult = session.insert("ssinsert1", board);
 			System.out.println("board_dao_impl_insert1_result = "+insresult);
 		} catch (Exception e) {
 				System.out.println("Board Dao IMPL Exception ->" + e.getMessage());

@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+#table {
+	padding-left: 120px;
+}
+
+#sc_cont_ul1{
+	margin-top: 67px;
+	margin-left: 250px;
+	    width: 1100px;
+    height: 660px;
+    display: inline-block;
+}
+.post_time{
+	float: right;
+}
+
+.boardcontent{
+	
+	margin-top: 50px;
+}
+
+.boardwrite{
+	margin-left: 250px;
+}

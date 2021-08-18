@@ -111,6 +111,47 @@ public class CalDaoImpl implements CalDao {
 		return upresult;
 	}
 
+	@Override
+	public List<Schedule> listSchedule2(int years, String mem_no) {
+		List<Schedule> listSchedule2 = null;
+		CalData cal3 = new CalData();
+		cal3.setYear_(years);
+		System.out.println("cal3.setYear_(year_s); end..");
+		
+		cal3.setMem_no(mem_no);
+		System.out.println("cal3.setMem_no(mem_no); end..");
+		
+		
+		System.out.println("CDI List start");
+		try {
+			listSchedule2 = session.selectList("ssScheduleList2",cal3);			
+		} catch (Exception e) {
+			System.out.println("CDI EXCEPTION --> "+e.getMessage());
+		}
+		return listSchedule2;
+		
+	}
+
+	@Override
+	public int todocnt2(int years, String mem_no) {
+
+		CalData cal2 = new CalData();
+		System.out.println("CalData cal = new CalData(); end~~");
+		cal2.setYear_(years);
+		System.out.println("cal.setTargetDateString(targetDateString); end..");
+		
+		cal2.setMem_no(mem_no);
+		System.out.println("cal.setMem_no(mem_no); end..");
+		
+		System.out.println("cal2.getYear() -->"+ cal2.getYear_());
+		System.out.println("cal2.getMem_no -->"+ cal2.getMem_no());
+		
+			
+		int ytodocnt = session.selectOne("ssTodoCnt2",cal2);
+		return ytodocnt;
+
+	}
+
 	
 
 	

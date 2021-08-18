@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import com.oracle.s20210702.model.Board;
+import com.oracle.s20210702.model.Member_OfficeInfo;
 import com.oracle.s20210702.service.BoardService;
+import com.oracle.s20210702.service.MailService;
 import com.oracle.s20210702.service.Paging;
 
 	
@@ -27,6 +29,8 @@ import com.oracle.s20210702.service.Paging;
 		
 		@Autowired
 		private BoardService bd;
+		@Autowired
+		private MailService ms;
 		
 		@RequestMapping("/list1")	
 		// 게시판 목록 조회
@@ -56,6 +60,8 @@ import com.oracle.s20210702.service.Paging;
 		public String detail(HttpServletRequest request, int board_no , int post_no, Model model) {
 			System.out.println("BoardController Start content..." );
 			Board board = bd.content(board_no, post_no);
+			Member_OfficeInfo mem_name = ms.ListMember1(board.getMem_no());
+			board.setMem_name(mem_name.getMem_name());
 			model.addAttribute("board",board);
 			
 			return "content1";
@@ -119,6 +125,10 @@ import com.oracle.s20210702.service.Paging;
 		@PostMapping(value = "write1")
 		public String write1(Board board, Model model) {
 			System.out.println("BoardController Write1 Start");
+			System.out.println(board.getMem_no());
+			System.out.println(board.getPost_no());
+			System.out.println(board.getPost_title());
+			System.out.println(board.getPost_content());
 			int insresult = bd.insert1(board);
 			if (insresult >0) return "redirect:list1";
 			else {

@@ -11,7 +11,8 @@
 		<typeAlias alias="Schedule"  	type="com.oracle.s20210702.model.Schedule"/>
 		<typeAlias alias="ChatRoom"     type="com.oracle.s20210702.model.ChatRoom"/>
       	<typeAlias alias="ChatMessage"     type="com.oracle.s20210702.model.ChatMessage"/>
-		
+		<typeAlias alias="Project_Info"  	type="com.oracle.s20210702.model.Project_Info"/>
+		<typeAlias alias="Appr"  	type="com.oracle.s20210702.model.Approval"/>
 		
 	</typeAliases>
 

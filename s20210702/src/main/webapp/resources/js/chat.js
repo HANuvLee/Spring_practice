@@ -1,12 +1,15 @@
-    window.onload = loginUser();
+    //window.onload = loginUser();
     
     function chatreload(login_youname) {
     	$('.' + login_youname).remove();
     	
     }
+    
+    
 		function loginUser() {
+			
 			var	mem_name = $("#mem_name").val();
-			$('.reload').remove();
+			//$('.reload').remove();
 			
 			$.ajax({
 				url: "http://localhost:8282/s20210702/loginunread_count",
@@ -51,6 +54,7 @@
 									
 								)
 							}
+							
 							$.ajax({
 								url: "http://localhost:8282/s20210702/logoutunread_count",
 								type: 'get',
@@ -58,7 +62,6 @@
 								dataType:"json",
 								async:false,
 								success: function(data) {
-
 									var logoutroomunread = data;
 								
 								
@@ -103,7 +106,7 @@
 					});	
 				}
 			});
-			setTimeout("loginUser()",500);	
+			//setTimeout("loginUser()",500);	
 		};
 		
 	
@@ -142,10 +145,14 @@
 					selectMessage(room_no);
 				}
 		  });
+		  		
+		  	 
+
 	};
 	
 	function selectMessage(room_no) {
-		wsOpen();
+		
+		
 		$('div.chatMiddle:not(.format) ul').html("");
 		$.ajax({
 			type: "GET", //요청 메소드 방식
@@ -159,12 +166,15 @@
                     // 채팅 목록 동적 추가
                     CheckLR(data[i]);
                 }
-		        updateMessage();        
+		        updateMessage();
+		        
+		        
 			}
 			
 		});
-		
+		wsOpen();
 	};
+	
 	function updateMessage() {
 		$.ajax({
 			type:"GET",
@@ -177,6 +187,8 @@
 		//$('loginUser()').load(window.location.href + 'loginUser()');
 	};
 	
+	
+	
 	let websocket;
 
 	function wsOpen(){
@@ -184,11 +196,11 @@
 		//웹소켓 전송시 현재 방의 번호를 넘겨서 보낸다.
 		websocket = new WebSocket(wsUri);
 		websocket.onopen = onOpen;
+		
 		websocket.onmessage = onMessage;
 	}
 	
 	function onOpen() {
-		
 		const data = {
 				"room_no" : $(".room_no").val(),
 				"sen_message_name" : $(".mem_name").val(),
@@ -219,6 +231,7 @@
 	
 	
 	function sendMessage(message){
+		
 		const data = {
 				"room_no" : $(".room_no").val(),
 				"sen_message_name" : $("#mem_name").val(),
@@ -288,6 +301,7 @@
 	}
 	
 	function createMessageTag(LR_className, sen_message_id, sen_message_name, message_content, unread_count) {
+		
 		let chatLi = $('div.chatMiddle.format ul li').clone();
 		chatLi.addClass(LR_className);
 		chatLi.find('.sender span').text(sen_message_name);

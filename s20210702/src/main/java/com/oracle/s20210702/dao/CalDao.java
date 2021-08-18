@@ -18,6 +18,12 @@ public interface CalDao {
 
 	int 											upSche(String schedule_no, String mem_no);
 
+	List<Schedule> 					listSchedule2(int years, String mem_no);
+
+	int 											todocnt2(int years, String mem_no);
+	
+	
+
 
 
 	

@@ -1,9 +1,14 @@
 package com.oracle.s20210702.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oracle.s20210702.dao.WorkManagementDao;
+import com.oracle.s20210702.model.CalData;
 import com.oracle.s20210702.model.WorkManagement;
 
 @Service
@@ -94,6 +99,51 @@ public class WorkManagementServiceImpl implements WorkManagementService {
 		System.out.println("WMSI_cresult = "+ cresult);
 		return cresult;
 	}
+
+
+	//금일 업무시간 계산용 (sysdate비교)
+	@Override
+	public WorkManagement todayworktime(String mem_no) {
+		WorkManagement wm3 = null;
+				
+		wm3 = wmd.todayworktime(mem_no);
+		return wm3;
+	}
+
+
+	//금주 출퇴 체크용!
+	@Override
+	public List<WorkManagement> weeklyCTCheck(String mem_no) {
+		List<WorkManagement> wmwlist = new ArrayList<WorkManagement>(); 
+		Calendar cal_today = Calendar.getInstance();
+		int todays = cal_today.get(Calendar.DAY_OF_MONTH);
+		int months= cal_today.get(Calendar.MONTH) +1;
+		int years = cal_today.get(Calendar.YEAR);
+		int today_no=cal_today.get(Calendar.DAY_OF_WEEK);
+		
+		
+		for (int i=1; i<=7; i++) {
+			WorkManagement wm4 = new WorkManagement();
+			cal_today.set((Calendar.DAY_OF_MONTH),todays-today_no+i);
+			int day_ = cal_today.get(Calendar.DAY_OF_MONTH);
+			months = cal_today.get(Calendar.MONTH)+1;
+			years = cal_today.get(Calendar.YEAR);
+			int day_nos=cal_today.get(Calendar.DAY_OF_WEEK);
+			
+			String targetDateString = String.format("%04d", (years)) + String.format("%02d", (months))+String.format("%02d", (day_));
+			
+			System.out.println("WMSI WCTCHECK BEFORE");
+			wm4 = wmd.wctcheck(targetDateString, mem_no);
+			System.out.println("WMSI WCTCHECK AFTER");
+
+			
+
+			if (wm4 != null) {			wmwlist.add(wm4); }
+		}
+				
+		return wmwlist;
+	}
+
 
 	
 	

@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="css/css_main.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<script src="https://kit.fontawesome.com/29ccb048c9.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="resources/css/mailbox.css">
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script type="text/javascript">
@@ -37,23 +40,31 @@
 </script>
 </head>
 <body>
-${member.mem_id} - ${member.mem_no } - ${member.mem_status} / <a href="main?mem_no=${sessionScope.mem_no }">Go Main</a>
- <h1>받은 메일함</h1>
+<div class="body">
+<%@ include file="/WEB-INF/viewpart/header.jsp"%>
+	<div id="sc_cont_up">
+		<div id="sc_cont_ul">
  <c:set var="num" value="${pg.total-pg.start+1}"></c:set>
-<div>
-	<a id="write" href="mailWrite?mem_id=${member.mem_id}">메일쓰기</a>
-	<a id="write" href="mailtome?mem_id=${member.mem_id}">내게쓰기</a>
+<div class="mailbotton">
+	
 	<button id="write" type="button" onclick="eraseMail()">삭제</button>
 </div> 
 <div id="mailbox">
- 		<ul>
+<a id="write" href="mailWrite?mem_id=${member.mem_id}">메일쓰기</a>
+	<a id="write" href="mailtome?mem_id=${member.mem_id}">내게쓰기</a>
+ 		<ul id="mailbox1">
 			<li><a href="mailList?mem_id=${member.mem_id }">전체메일함</a></li>
-			<li><a href="rec_mailList?mem_id=${member.mem_id }">받은메일함</a></li> 
+			<li><a class="checkmailbox" href="rec_mailList?mem_id=${member.mem_id }">받은메일함</a></li> 
 			<li><a href="sen_mailList?mem_id=${member.mem_id }">보낸메일함</a></li> 
 			<li><a href="del_mailList?mem_id=${member.mem_id }">삭제된메일함</a></li>
 		</ul>
 </div>
 <div id="table">
+<div class="row">
+		<span class="cell col1">보낸 사람</span>
+		<span class="cell col2">제목</span> 
+		<span class="cell col3">보낸 날짜</span>
+</div>
  	<c:forEach var="mail" items="${listMail }">
 		<div class="row">
 			<span class="cell col1"><input type="checkbox" id="mail_no[]" value="${mail.mail_no }">[${mail.mem_rank}]${mail.mem_name}</span>
@@ -73,6 +84,10 @@ ${member.mem_id} - ${member.mem_no } - ${member.mem_status} / <a href="main?mem_
 	<c:if test="${pg.endPage < pg.totalPage }">
 		<a href="rec_mailList?currentPage=${pg.startPage+pg.pageBlock}&mem_id=${member.mem_id}">[다음]</a>
 	</c:if>
+</div>
+		</div>
+	</div>
+<%@ include file="/WEB-INF/viewpart/footer.jsp"%>
 </div>
 </body>
 </html>

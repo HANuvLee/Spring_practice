@@ -74,8 +74,8 @@ public class MainController {
 		model.addAttribute("mem_no", member.getMem_no());
 		model.addAttribute("mem_name",member.getMem_name());
 		
-		System.out.println("MO =>"+mo);
-		System.out.println("MainCTRL mem_no -> "+mem_no);
+//		System.out.println("MO =>"+mo);
+//		System.out.println("MainCTRL mem_no -> "+mem_no);
 		
 		
 		
@@ -83,19 +83,19 @@ public class MainController {
 		System.out.println("main ctrl weekly start");
 		WorkManagement wm2 = wms.weeklyworktime(mem_no);
 		model.addAttribute("wm2", wm2);
-		System.out.println("main_ctrl_wm2_test->"+wm2.getOvertime());
-		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_day_cnt());
-		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_time_avg());
-		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_time_sum());
+//		System.out.println("main_ctrl_wm2_test->"+wm2.getOvertime());
+//		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_day_cnt());
+//		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_time_avg());
+//		System.out.println("main_ctrl_wm2_test->"+wm2.getWork_time_sum());
 		
 		// 게시판 최근글 main에 listing 관련
 		List<Board>recentlistBoard1=bs.recentlistBoard1();
 		model.addAttribute("recentlistBoard1", recentlistBoard1);
-		System.out.println("test-->"+recentlistBoard1.get(0).getPost_title());
-		System.out.println("test-->"+recentlistBoard1.get(1).getPost_title());
-		System.out.println("test-->"+recentlistBoard1.get(2).getPost_title());
-		System.out.println("test-->"+recentlistBoard1.get(3).getPost_title());
-		System.out.println("test-->"+recentlistBoard1.get(4).getPost_title());
+//		System.out.println("test-->"+recentlistBoard1.get(0).getPost_title());
+//		System.out.println("test-->"+recentlistBoard1.get(1).getPost_title());
+//		System.out.println("test-->"+recentlistBoard1.get(2).getPost_title());
+//		System.out.println("test-->"+recentlistBoard1.get(3).getPost_title());
+//		System.out.println("test-->"+recentlistBoard1.get(4).getPost_title());
 		
 		
 		// 휴가 관련 
@@ -134,11 +134,11 @@ public class MainController {
 		int what_week = cal.get(Calendar.WEEK_OF_MONTH);
 		
 		
-		System.out.println("Calendar --> Year --> "+years);
-		System.out.println("Calendar --> Month --> "+months);
-		System.out.println("Calendar --> Today --> "+todays);
-		System.out.println("Calendar --> FirstDay --> "+first_day);
-		System.out.println("Calendar --> whatweek --> "+what_week);
+//		System.out.println("Calendar --> Year --> "+years);
+//		System.out.println("Calendar --> Month --> "+months);
+//		System.out.println("Calendar --> Today --> "+todays);
+//		System.out.println("Calendar --> FirstDay --> "+first_day);
+//		System.out.println("Calendar --> whatweek --> "+what_week);
 
 		//스케쥴 관련
 		
@@ -156,7 +156,21 @@ public class MainController {
 		
 		
 		// 받은 메일 출력!
-	
+		Mail mail = new Mail();
+		String currentPage = "1";
+		
+		Member_OfficeInfo mor = mailService.ListMember(member.getMem_id());
+		model.addAttribute("mor",mor);
+		int rec_total = mailService.rec_total(mor);
+		Paging pg = new Paging(rec_total, currentPage);
+		mail.setStart(pg.getStart());
+		mail.setEnd(pg.getEnd());
+		mail.setMem_no(mo.getMem_no());
+		mail.setMem_id(mo.getMem_id());
+		List<Mail> rec_listMail = mailService.rec_ListMail(mail);
+		model.addAttribute("total", rec_total);
+		model.addAttribute("listMail",rec_listMail);
+		model.addAttribute("pg",pg);
 		
 		
 		//채팅관련

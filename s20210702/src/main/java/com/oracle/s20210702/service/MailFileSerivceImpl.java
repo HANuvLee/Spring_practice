@@ -34,6 +34,14 @@ public class MailFileSerivceImpl implements MailFileService {
 		model.put("mailFile", fd.one(svcMap));
 		return true;
 	}
-	
+
+	@Override
+	public Mail_File projectFile(Map<String, Object> map) {
+		System.out.println("MailFileSerivceImpl projectFile Start...");
+		Mail_File projectFile = null;
+		projectFile = fd.projectFile(map);
+		return projectFile;
+	}
+
 
 }

@@ -12,4 +12,8 @@ public class Mail_File {
 	private String mail_save_name;
 	private long mail_file_size;
 	private int mail_file_open;
+	
+	//================게시판 첨부파일용====================
+	private int project_no;
+	private int board_no;
 }

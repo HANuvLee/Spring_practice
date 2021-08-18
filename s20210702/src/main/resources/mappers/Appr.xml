@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ApprovalDao">
+<select id="ssApprtotal1" resultType="int" parameterType="String">
+	select Count(*) FROM APPROVAL_DOC where mem_no=#{mem_no}
+</select>
+
+<select id="ssApprList1" parameterType="Appr" resultType="Appr">
+ 	select * 
+         from (select rownum rn, a.* 
+               from (select * from APPROVAL_DOC order by APP_DOC_DATE desc) a
+              ) 
+    	 where rn between #{start} and  #{end}     
+    	 and mem_no=#{mem_no}
+
+</select>
+
+<select id="ssApprtotal2" resultType="int" parameterType="String">
+	select Count(*) FROM APPROVAL_DOC where APP_DOC_MEMBERTO1=#{mem_no} or APP_DOC_MEMBERTO2=#{mem_no}
+</select>
+
+<select id="ssApprList2" parameterType="Appr" resultType="Appr">
+ 	select * 
+         from (select rownum rn, a.* 
+               from (select * from APPROVAL_DOC order by APP_DOC_DATE desc) a
+              ) 
+    	 where rn between #{start} and  #{end}     
+    	 and (APP_DOC_MEMBERTO1 =#{mem_no}
+       or APP_DOC_MEMBERTO2 =#{mem_no})
+
+</select>
+
+<insert id="ssapprinsert1" parameterType="Appr">
+INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL, #{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date})
+</insert>
+
+<insert id="ssapprinsert11" parameterType="int">
+	INSERT INTO APPROVAL_CHECK VALUES (#{max_adno}, '0','0','0')
+</insert>
+
+<select id="ssadnomax" resultType="int">
+	select max(APP_DOC_NO) from APPROVAL_DOC
+</select>
+
+<select id="sscarcheck" parameterType="Appr" resultType="Car">
+	<![CDATA[
+	SELECT * FROM CAR WHERE CAR_END IS NULL OR CAR_END < SYSDATE
+	    ]]>
+</select>
+
+
+<insert id="ssapprinsert2" parameterType="Appr">
+INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date})
+</insert>
+
+<update id="sscarinsert2" parameterType="Appr">
+	 UPDATE CAR 
+       SET CAR_START = #{sch_start_date} ,
+           CAR_END = #{sch_end_date} 
+           MEM_NO = #{mem_no}
+           where car_no = #{car_no}
+</update>
+
+
+<insert id="ssapprinsert3" parameterType="Appr">
+	INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},'','')
+</insert>
+
+<select id="sscheckmt1" parameterType="Appr">
+ select count(*) from approval_doc where mem_no=#{mem_no] and app_doc_memberto1 = #{app_doc_memberto1} and app_doc_no = #{app_doc__no}  
+</select>
+
+</mapper>

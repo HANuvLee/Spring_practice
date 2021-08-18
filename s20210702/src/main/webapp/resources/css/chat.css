@@ -9,10 +9,10 @@
     border-radius: 50%;
     padding: 4px;
     /* display: block; */
-    width: 18;
+    width: 18px;
     text-align: center;
     float: right;
-    margin-top: 18px;
+    margin-top: 15px;
 	
 }
 
@@ -36,9 +36,10 @@
   position: fixed;
   right: 2;
   text-align: left;
+  background-color: aliceblue;
 }
 .modal .header {
-  padding: 20px;
+  padding-left: 20px;
   border-bottom: 1px solid #ddd;
   font: 300 24px Lato;
   position: relative;
@@ -46,7 +47,7 @@
 .modal .chatMiddle {
   padding: 12px;
   font: 300 16px Lato;
-  height: 270px;
+  height: 320px;
   overflow: auto;
 }
 
@@ -60,7 +61,7 @@
   position: relative;
   transition: all .4s ease;
   cursor: pointer;
-  margin-left: 10;
+  margin-left: 10px;
 }
 .js-click-modal1 {
   background: linear-gradient(to right, #acabab, #000000);
@@ -72,7 +73,7 @@
   position: relative;
   transition: all .4s ease;
   cursor: pointer;
-  margin-left: 10;
+  margin-left: 10px;
 }
 .js-click-modal2 {
   background: linear-gradient(to right, #6468ff, #ff6476);
@@ -84,7 +85,7 @@
   position: relative;
   transition: all .4s ease;
   cursor: pointer;
-  margin-left: 10;
+  margin-left: 10px;
 }
 .btn:hover {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
@@ -92,6 +93,7 @@
 
 .container.modal-open .modal {
   top: 480px;
+  border-radius: 20px;
 }
 .textarea {
 	width: 326px;
@@ -136,4 +138,6 @@
 	font-size: 2px;
 }
 
-
+.chatBottom{
+	text-align: center;
+}

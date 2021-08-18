@@ -22,4 +22,21 @@ public class WorkManagement {
 	private int work_day_cnt;
 	private int overtime;
 	
+	private Date sysdate;
+	private int worktime_hh;
+	private int worktime_mi;
+	private int worktime_ss;
+	private int worktime_full;
+	
+	private int days_;
+	private int months_;
+	private int years_;
+	private int day_nos_;
+	
+	private int daily_overtime_hh;
+	private int daily_overtime_mi;
+	private int daily_overtime_ss;
+	private int daily_overtime_full;
+	
+	
 }

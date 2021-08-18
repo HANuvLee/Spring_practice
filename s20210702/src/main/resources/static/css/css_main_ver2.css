@@ -1,0 +1,178 @@
+@charset "UTF-8";
+
+@font-face{font-family:NanumSquareL;
+    font-weight:300;
+    src:url(/static/font/NanumSquareL.woff) 
+    format("woff")}      
+    
+@font-face{
+    font-family:NanumSquareR;font-weight:400;
+    src:url(/static/font/NanumSquareR.woff) format("woff")}      
+    
+    
+    
+@font-face{font-family:NanumSquareB;font-weight:700;
+        src:url(/static/font/NanumSquareB.woff) format("woff")}      
+        
+@font-face{font-family:NanumSquareEB;font-weight:800;src:url(/static/font/NanumSquareEB.woff) format("woff")}  
+@font-face{font-family:NanumGothic;font-weight:400;src:url(/static/font/NanumGothic.woff) format("woff")}  
+@font-face{font-family:NanumGothicBold;font-weight:700;src:url(/static/font/NanumGothicBold.woff) format("woff")} 
+
+
+.all_container{
+	width: 100%;
+	height: 1080px;
+	display: inline-flex;
+	background: pink;
+}
+ 
+aside{
+	width: 250px;
+	/* height: 880px; */
+	display: inline-flex;
+	float: left;
+	background-color: white;
+	
+	border: 1px dashed black
+}
+
+#as_pbox{
+	width: 230px;
+	height: 280px;
+	background-color: white;
+	border-radius: 5px;
+	position: relative;
+	top: 60px;
+	margin: 10px 10px;
+	padding: 0;
+	border: 2px dashed #aeaeae;
+	align-items: center;
+	justify-content: center;
+}
+
+.pf_mem_name li {
+	font-size: 1.7em;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.pf_team_mem_info li{
+	font-size: 1.0em;
+	text-align: center;
+	margin-top: 2px;
+
+}
+.log_out_btn li{
+	font-size: 1.6em;
+	text-align: center;
+	margin-top: 15px;
+}
+
+.pf_photo{
+	width: 100px;
+	height: 100px;
+	border-radius: 30%;
+	margin-left: 65px;
+	margin-top: 20px;
+	position: relative;
+	padding: 0;
+	overflow: hidden;
+}
+
+#as_etc{ 
+	width: 230px;
+	height: 100px;
+	background-color: white;
+	border-radius: 5px;
+	margin: 10px 10px;
+	position: relative;
+	top: 80px;
+	border: 2px dashed #aeaeae;
+}
+
+#as_ctbox{
+	width: 230px;
+	height: 150px;
+	background-color: white;
+	border-radius: 5px;
+	margin: 10px 10px;
+	position: relative;
+	top: 80px;
+	border: 2px dashed #aeaeae;
+}
+
+#as_etc h1{
+	font-size: 1.4em;
+	font-weight: bolder;
+	margin: 5px;
+}
+
+#as_ctstatus{
+	width: 230px;
+	height: 300px;
+	background-color: white;
+	border-radius: 5px;
+	margin: 10px 10px;
+	position: relative;
+	top: 90px;
+	border: 2px dashed #aeaeae;
+}
+
+
+/* ============================================================= */
+
+#bd_container{
+	width: (100%-250)px;
+	height: auto;
+	display:block;
+	clear: right;
+	margin-bottom: 0;
+}
+
+/* ============================================================= */
+
+#hd_container{
+	background-color: white;
+	width: 100%; 
+	height: 100px
+}
+
+#hd_logo{
+	background-color: white;
+	width: 250px;
+	height: 80px;
+	color: white;
+	float: left;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	position: relative;
+	
+	
+}
+#hd_logo h2{
+	margin: 9px;
+	padding: 0;
+}
+
+#hd_dash{
+	width: 100%;
+	height: 140px;
+	float: left;
+	margin: 0;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px dashed #aeaeae;
+}
+
+#hd_dash ul li{
+	list-style-type: none;
+	display: inline-flex;
+	width: 100px;
+	margin-top: 10px;
+	margin-left: 60px;
+	
+}
+
+/* ============================================================= */

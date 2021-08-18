@@ -22,6 +22,12 @@ public interface CalService {
 
 	int 								updsche(String schedule_no, String mem_no);
 
+	int 								todotot2(int years, String mem_no);
+
+	List<Schedule> 		listSchedule2(int years, String mem_no);
+
+	
+
 
 
 	

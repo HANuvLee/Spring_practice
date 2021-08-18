@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Project_Info">
+
+	<select id="bqProjectTotal"	resultType="int">
+		select COUNT(*) from project_info
+	</select>
+	
+	<select id="bqProjectList" parameterType="Project_Info" resultType="Project_Info">
+		<![CDATA[
+		select * 
+         from (select rownum rn, a.* 
+               from (select * from project_info) a
+              ) 
+    	 where rn >= #{start} 
+    	 and   rn <= #{end}
+		]]>
+		
+	</select>
+	
+	<select id="bqMaxPno" resultType="int">
+	select max(project_no) from project_info where board_no = 2
+	</select>
+	
+	<insert id="bqpjinsert" parameterType = "Project_Info">
+	insert into project_info values (2 ,#{project_no}  ,#{mem_no} ,#{project_name} ,#{project_excost} ,#{project_realcost} ,
+	to_date(#{project_start},'YY-MM-DD') ,to_date(#{project_end},'YY-MM-DD') ,#{project_company} ,#{project_progress}, '')
+	</insert>
+	
+	<select id="bqpjdetail" parameterType="int" resultType="Project_Info">
+	select * from project_info where project_no = #{projet_no}
+	</select>
+	
+	<update id="bqpjupdate" parameterType="Project_Info">
+		update project_info
+		set project_start=#{project_start}, project_end=#{project_end},
+		project_excost=#{project_excost}, project_realcost=#{project_realcost},
+		project_progress=#{project_progress}
+		where project_no=#{project_no}
+	</update>
+
+	<delete id="bqdelete" parameterType="int">
+		delete from project_info
+		where project_no=#{project_no}
+	</delete>
+	
+	<select id="bqpjwrite" parameterType="String" resultType="Member">
+		select distinct m.team_no, p.mem_no
+		from member_officeinfo m , project_info p
+		where m.mem_no = p.mem_no and m.mem_no = #{mem_no}
+	</select>
+	
+	<select id="bqpjteam" parameterType="String" resultType="Member">
+		select * 
+		from member_officeinfo
+		where mem_no = #{smem_no}
+	</select>
+	
+	<!-- 파일 첨부 -->
+	<insert id="hhInsertFile" parameterType="MailFile">
+		insert into MAIL_File values(SEQ_MAIL_FILE_NO.NEXTVAL, null, #{mail_org_name}, #{mail_save_name}, #{mail_file_size}, 0, #{project_no}, 2)
+	</insert>
+	<!--첨부파일 다운로드  -->
+	<select id="hhprojectFileone" parameterType="hashmap" resultType="hashmap">
+		select * from mail_file
+		<where>
+			<if test="null != mail_file_no and '' != mail_file_no">AND mail_file_no = #{mail_file_no}</if> 
+		</where>
+	</select>
+</mapper>

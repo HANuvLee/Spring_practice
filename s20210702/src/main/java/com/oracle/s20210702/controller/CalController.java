@@ -2,6 +2,7 @@ package com.oracle.s20210702.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,13 +56,14 @@ public class CalController {
 				
 				System.out.println("day day ==>" +String.format("%02d", caltoday.getToday_()) );
 				
-			// 날짜별 스케쥴 여부 및 갯수 검색	
-//				List<CalData> schcntlist = cs.schcntlist(mem_no);
-//				model.addAttribute("schcntlist",schcntlist);
-//				System.out.println("schcntlist.size() -->"+schcntlist.size());
+			//작업할 내용(삭제예정)
+			// 일정이름 --> 달력 칸에 입력되도록!
+			// 달력칸 초간단 css일단 적용
+			// today 표시 글씨 : (일: red / 토 : gray  / today = blue ) / 셀 배경 (일,토 : white  / today : beige / 일정있는날 : pinK? green? orange 이런 계통) 
+			// 생각나면 추가하는것으로
 			
 				
-		
+				
 		return "mycal";
 	}
 

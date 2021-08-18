@@ -8,12 +8,25 @@ where mem_no = #{mem_no}
 and to_date((#{targetDateString}),'YYYYMMDD') between (SCHEDULE_START-1) and (SCHEDULE_END)
 </select>
 
+<select id="ssTodoCnt2" parameterType="CalData" resultType="int">
+select count(schedule_start) from SCHEDULE 
+where mem_no = #{mem_no}
+and to_date((SCHEDULE_START),'YYYY') = #{year_}
+</select>
+
+
 <select id="ssScheduleList" parameterType="CalData" resultType="Schedule">
 select * from SCHEDULE 
 where mem_no = #{mem_no}
 and (to_date((#{targetDateString}),'YYYYMMDD') between (SCHEDULE_START-1) and (SCHEDULE_END))
 
 
+</select>
+
+<select id="ssScheduleList2" parameterType="CalData" resultType="Schedule">
+SELECT SCHEDULE_KIND,TO_CHAR(SCHEDULE_START,'yyyy-MM-dd HH:mm') SCHEDULE_START,TO_CHAR(SCHEDULE_END,'yyyy-MM-dd HH:mm') SCHEDULE_END, 
+(trunc(SCHEDULE_END-SCHEDULE_START)+ceil(2*mod((SCHEDULE_END-SCHEDULE_START),1))/2) VDAY  
+FROM SCHEDULE WHERE SCHEDULE_KIND='1' AND MEM_NO = #{mem_no} AND TO_CHAR(SCHEDULE_START,'yyyy')=#{year_}
 </select>
 
 <insert id="ssScheIns" parameterType="Schedule">

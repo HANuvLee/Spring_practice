@@ -35,79 +35,6 @@ public class ChatController {
 	@Autowired
 	private MailService ms;
 	
-//	@RequestMapping(value = "{room_no}.do")
-//	public void messageList(@PathVariable String room_no, String mem_id, Model model, HttpServletResponse response) throws JsonIOException, IOException {
-//		
-//		List<ChatMessage> mList = cService.messageList(room_no);
-//		response.setContentType("application/json; charset=utf-8");
-//		
-//		ChatMessage message = new ChatMessage();
-//		message.setSen_message_id(mem_id);
-//		message.setRoom_no(room_no);
-//		cService.updateCount(message);
-//		
-//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-//		gson.toJson(mList, response.getWriter());
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping("createChat.do")
-//	public String createChat(ChatRoom room, String mem_name, String mem_id) {
-//		
-//		Member_OfficeInfo mo = ms.ListMember(mem_id);
-//		
-//		room.setMem_id(mem_id);
-//		room.setMem_name(mem_name);
-//		room.setYou_id(mo.getMem_id());
-//		room.setYou_name(mo.getMem_name());
-//		
-//		ChatRoom exist = cService.searchChatRoom(room);
-//		
-//		if(exist == null) {
-//            System.out.println("방이 없다!!");
-//            int result = cService.createChat(room);
-//            if(result == 1) {
-//                System.out.println("방 만들었다!!");
-//                return "new";
-//            }else {
-//                return "fail";
-//            }
-//        }
-//        // DB에 방이 있을 때
-//        else{
-//            System.out.println("방이 있다!!");
-//            return "exist";
-//        }
-//		
-//	}
-//	
-//	@RequestMapping("chatRoomList.do")
-//	public void createChat(ChatRoom room, ChatMessage message, String mem_id, HttpServletResponse response) throws JsonIOException, IOException {
-//		System.out.println("mem_name->" + mem_id);
-//		List<ChatRoom> cList = cService.ChatRoomList(mem_id);
-//		
-//		for(int i = 0; i < cList.size(); i++) {
-//			message.setRoom_no(cList.get(i).getRoom_no());
-//			message.setSen_message_id(mem_id);
-//			int count = cService.selectUnReadCount(message);
-//			cList.get(i).setUnread_count(count);
-//		}
-//		response.setContentType("application/json; charset=utf-8");
-//		
-//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-//		gson.toJson(cList, response.getWriter());
-//	}
-//	@RequestMapping("chatSession.do")
-//	public void chatSession(HttpServletResponse response) throws JsonIOException, IOException {
-//		
-//		ArrayList<String> chatSessionList = cSession.getLoginUser();
-//		
-//		response.setContentType("application/json; charset=utf-8");
-//		
-//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-//		gson.toJson(chatSessionList, response.getWriter());
-//	}
-	
 	@RequestMapping(value = "selectroom")
 	@ResponseBody
 	public void selectroom(Model model, ChatMessage message, ChatRoom room, String mem_name, String you_name, HttpServletResponse response) throws JsonIOException, IOException {
@@ -117,8 +44,6 @@ public class ChatController {
 		
 		String room_no = cService.selectroom_no(you_name, mem_name);
 		System.out.println("selectroom room_no->" + room_no);
-//		List<ChatMessage> mList = cService.messageList(room_no);
-//		System.out.println("selectroom mList -> " + mList);
 		model.addAttribute("room_no", room_no);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -161,6 +86,7 @@ public class ChatController {
 	@RequestMapping(value = "loginUser")
 	@ResponseBody
 	public void loginUser(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
+		System.out.println("ChatController loginUser start...");
 		ArrayList<String> chatSessionList = cSession.getLoginUser();
 		
 		response.setContentType("application/json; charset=utf-8");
@@ -172,6 +98,7 @@ public class ChatController {
 	@RequestMapping(value = "logoutUser")
 	@ResponseBody
 	public void logoutUser(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
+		System.out.println("ChatController logoutUser start...");
 		List<String> allUser = cService.allUser();
 		
 		
@@ -184,7 +111,7 @@ public class ChatController {
 	@RequestMapping(value = "loginunread_count")
 	@ResponseBody
 	public void loginunread_count(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
-		System.out.println("ChatController unread_count start...");
+		System.out.println("ChatController loginunread_count start...");
 		List<String> allUser = cService.allUser();
 		ArrayList<String> chatSessionList = cSession.getLoginUser();
 		List<String> myroom = new ArrayList<String>();
@@ -215,7 +142,7 @@ public class ChatController {
 	@RequestMapping(value = "logoutunread_count")
 	@ResponseBody
 	public void logoutunread_count(HttpServletResponse response, String mem_name) throws JsonIOException, IOException {
-		System.out.println("ChatController unread_count start...");
+		System.out.println("ChatController logoutunread_count start...");
 		List<String> allUser = cService.allUser();
 		ArrayList<String> chatSessionList = cSession.getLoginUser();
 		List<String> myroom = new ArrayList<String>();

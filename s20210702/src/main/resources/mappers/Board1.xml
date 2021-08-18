@@ -39,8 +39,7 @@
 	</delete>
 	
 	<insert id="ssinsert1" parameterType = "Board">
-		insert into unify_board values (1 , #{post_no},#{mem_no},sysdate,
-																	  #{post_title},#{post_content})
+		insert into unify_board values (1, #{post_no}, #{mem_no}, sysdate, #{post_title}, #{post_content})
 	</insert>
 	
 	<select id="ssMaxPno1" resultType="int">

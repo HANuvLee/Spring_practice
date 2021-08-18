@@ -1,5 +1,6 @@
 package com.oracle.s20210702.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.Session;
@@ -28,9 +29,16 @@ public class MailFileDaoImpl implements MailFileDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> one( Map<String, Object> param ){
-		System.out.println("MailFileDaoImpl one");
+		System.out.println("MailFileDaoImpl one Start");
 		return (Map<String, Object>)Session.selectOne( "hhmailFileone", param );
 	}
-
 	
+	@Override
+	public Mail_File projectFile(Map<String, Object> map) {
+		System.out.println("MailFileDaoImpl projectFile Start...");
+		Mail_File projectFile = new Mail_File();
+		projectFile = Session.selectOne("hhprojectFile", map);
+		return projectFile;
+	}
+
 }

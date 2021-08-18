@@ -105,6 +105,8 @@ public class CalServiceImpl implements CalService {
 			
 			int todocnt = cd.todocnt(targetDateString,mem_no);
 			cdt.setTodocnt(todocnt);
+			List<Schedule> lishoncal = cd.listSchedule(targetDateString,mem_no);
+			cdt.setLishe(lishoncal);
 			
 			
 			callist.add(cdt);
@@ -143,7 +145,7 @@ public class CalServiceImpl implements CalService {
 
 	//schedule insert!!
 	@Override
-	public int scheIns(String schedule_kind, String schedule_name, String startDateString, String endDateString,
+	public int scheIns(String schedule_kind, String schedule_name,String startDateString, String endDateString,
 			String schedule_content, String mem_no) {
 		System.out.println("CSI SchIns Start!");
 		int sch_ins_res = cd.schIns(schedule_kind,schedule_name, startDateString,endDateString,schedule_content, mem_no);
@@ -171,6 +173,33 @@ public class CalServiceImpl implements CalService {
 		System.out.println("test_csi_upresult ==> "+upresult);
 		
 		return upresult;
+	}
+
+	@Override
+	public int todotot2(int years, String mem_no) {
+		System.out.println("CSI YTODOCNT start");
+
+		
+		int ytodocnt = cd.todocnt2(years,mem_no);
+		System.out.println("CSI_CHECK_DATA_________________");
+		System.out.println("targetDateString ==> " + years);
+		System.out.println("mem_no ==> " + mem_no);
+		System.out.println("todocnt ==> " + ytodocnt);
+		return ytodocnt;
+		
+		
+	}
+
+	@Override
+	public List<Schedule> listSchedule2(int years, String mem_no) {
+
+		List<Schedule> ylistSchedule = null;
+		System.out.println("CSI ylist Start!");
+		ylistSchedule = cd.listSchedule2(years,mem_no);
+		System.out.println("CSI listSchedule.size()==>"+ylistSchedule.size());
+		
+		return ylistSchedule;
+
 	}
 
 	

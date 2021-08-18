@@ -13,7 +13,7 @@ public class Board {
 	//list 용
 	private int board_no;
 	private int post_no;
-	private int mem_no;
+	private String mem_no;
 	private Date post_date;
 	private String post_title;
 	private String post_content;

@@ -1,5 +1,7 @@
 package com.oracle.s20210702.model;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,4 +40,7 @@ public class CalData {
 	
 	//todo있을때 없을때 구분
 	private int todocnt;
+	
+	// todolist on calendar 용
+	private List<Schedule> lishe;
 }

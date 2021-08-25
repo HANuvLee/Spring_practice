@@ -10,13 +10,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <script src="https://kit.fontawesome.com/29ccb048c9.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="resources/css/mailbox.css">
+<link rel="stylesheet" href="resources/css/scheWriteForm.css">
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </head>
 <body>
 <div class="body">
 <%@ include file="/WEB-INF/viewpart/header.jsp"%>
-	<div id="sc_cont_up">
-		<div id="sc_cont_ul">
+	<div id="sc_cont_up3">
+		<div id="sc_cont_ul3">
 	<h2>스케쥴 작성</h2>
 	<form action="scheins" method="post">
 	<table border="1">
@@ -177,19 +178,19 @@
 		</tr>
 		
 		<tr>
-		<th> 스케쥴 이름 </th> <td> <input type="text" name="schedule_name" required="required"> </td>
+		<th> 스케쥴 이름 </th> <td> <input type="text" name="schedule_name" required="required" style="width:900px;"> </td>
 		</tr>
 		
 		<tr>
-		<th> 스케쥴 내용 </th> <td> <textarea name="schedule_content" cols="40" rows="20"></textarea></td>
+		<th> 스케쥴 내용 </th> <td> <textarea name="schedule_content" cols="140" rows="20"></textarea></td>
 		</tr>
 		
-		<tr>
-		<td colspan="2">
-		<input type="submit" value="작성완료"> / <input type="reset" value="다시 작성">
-		</td>
-		</tr>
+		
+		
 	</table>
+	<div class="swfbtn">
+		<input type="submit" value="작성완료"> / <input type="reset" value="다시 작성">
+	</div>
 	</form>
 		</div>
 	</div>

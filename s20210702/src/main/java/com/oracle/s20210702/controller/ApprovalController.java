@@ -25,10 +25,10 @@ import com.oracle.s20210702.service.Paging;
 public class ApprovalController {
 	
 	@Autowired
-	ApprovalService aps;
+	private ApprovalService aps;
 	
 	@Autowired
-	MainService ms;
+	private MainService ms;
 	
 	@RequestMapping(value = "approval_main")
 	private String appmain(String mem_no, HttpServletRequest request, Model model) {
@@ -121,22 +121,39 @@ public class ApprovalController {
 					Member_OfficeInfo mo = ms.pfview(apr.getMem_no());
 					model.addAttribute("mo",mo);
 					
+					//auth_no조회
+					int auth_no = aps.getauthno(apr.getMem_no());
+					System.out.println("check// auth_no ==>"+ auth_no);
+					model.addAttribute("auth_no",auth_no);
+					
+					//대표 제외 total
 					int total2 = aps.total2(apr.getMem_no());  
+					//대표 전용 total
+					int totalT = aps.totalT(apr.getMem_no());
 					
 					System.out.println("APCTRL total=>" + total2);
 					System.out.println("currentPage=>" + currentPage);
 					//                     14     NULL(0,1....)
 					Paging pg = new Paging(total2, currentPage);
+					Paging pgT = new Paging(totalT, currentPage);
 					apr.setStart(pg.getStart());   // 시작시 1
 					apr.setEnd(pg.getEnd());       // 시작시 10 
+					
+					
+					//대표 제외 리스트
 					List<Approval> listAppr2 = aps.listAppr2(apr);
+					//대표전용 리스트
+					List<Approval> listApprT = aps.listApprT(apr);
 					System.out.println("pg.getStart()=>" + pg.getStart());
 					System.out.println("pg.getEnd()=>" + pg.getEnd());
 					System.out.println("APPR Controller list2 listAppr2.size()=>" + listAppr2.size());
 					model.addAttribute("total1", total2);
+					model.addAttribute("totalT", totalT);
 					model.addAttribute("listAppr2",listAppr2);
+					model.addAttribute("listApprT",listApprT);
 					System.out.println("listAppr2=>" + listAppr2);
 					model.addAttribute("pg",pg);
+					model.addAttribute("pgT",pgT);
 			
 			
 			return "app_my_list2";
@@ -288,16 +305,112 @@ public class ApprovalController {
 					System.out.println("mem_no(from) ==>"+from_mem_no);
 					
 					int doc_no = apr.getApp_doc_no();
-					String mem_no1 = from_mem_no; 
+					String mem_no1 = from_mem_no;  // from 이 결재자  //mem_no2가 상신올린사람.
 					String mem_no2 = apr.getMem_no();
 					System.out.println("test doc__no / =>" +doc_no);
 					System.out.println("test mem_no1 / =>" +mem_no1);
 					System.out.println("test mem_no2 / =>" +mem_no2);
 					
-					//memberto1 인지 2인지 확인  (from)
-					int checkmt1 = aps.checkmt1(mem_no1,mem_no2,doc_no);
-					System.out.println("checkmt1-->"+checkmt1);
+					//결재 권한 체크!!
+					int auth_no = aps.getauthno(mem_no1);
+					System.out.println("check// auth_no ==>"+ auth_no);
+					model.addAttribute("auth_no",auth_no);
 					
-					return "redirect:app_my_list2?mem_no="+mo.getMem_no();
+					if (auth_no == 1) { 	apr.setApp_doc_memberto3(mem_no1); 
+					System.out.println("check// app_doc_memberto3 ==>"+apr.getApp_doc_memberto3());}
+					if (auth_no == 2) { 	apr.setApp_doc_memberto2(mem_no1); 
+					System.out.println("check// app_doc_memberto2 ==>"+apr.getApp_doc_memberto2());}
+					if (auth_no == 3) { 	apr.setApp_doc_memberto1(mem_no1); 
+					System.out.println("check// app_doc_memberto1 ==>"+apr.getApp_doc_memberto1());}
+					
+						apr.setApp_auth_no(auth_no);
+						apr.setMem_no(mem_no2);
+						
+						System.out.println("check// mem_no ==>" + apr.getMem_no());
+						System.out.println("check// app_doc_no ==>" + apr.getApp_doc_no());
+						System.out.println("check// app_auth_no ==>" + apr.getApp_auth_no());
+						
+						int res_up_apck2 = aps.up_apck2(apr);
+						System.out.println("check// res_up_apck2 -->"+ res_up_apck2);
+						model.addAttribute("apck_result",res_up_apck2);
+					
+					
+					
+					return "redirect:app_my_list2?currentPage=1&mem_no="+mo.getMem_no();
+				}
+				
+				@RequestMapping(value = "no_accept")
+				private String appnoaccept(String from_mem_no,Approval apr, Model model, HttpServletRequest request) {
+					
+					// 개인정보 조회
+					Member_OfficeInfo mo = ms.pfview(from_mem_no);
+					model.addAttribute("mo",mo);
+					
+					//변수확인(추후삭제))
+					System.out.println("APPCTRL accept start");
+					System.out.println("app doc no ==> "+ apr.getApp_doc_no());
+					System.out.println("mem_no(to) ==>"+apr.getMem_no());
+					System.out.println("mem_no(from) ==>"+from_mem_no);
+					
+					int doc_no = apr.getApp_doc_no();
+					String mem_no1 = from_mem_no;  // from 이 결재자  //mem_no2가 상신올린사람.
+					String mem_no2 = apr.getMem_no();
+					System.out.println("test doc__no / =>" +doc_no);
+					System.out.println("test mem_no1 / =>" +mem_no1);
+					System.out.println("test mem_no2 / =>" +mem_no2);
+					
+					//결재 권한 체크!!
+					int auth_no = aps.getauthno(mem_no1);
+					System.out.println("check// auth_no ==>"+ auth_no);
+					model.addAttribute("auth_no",auth_no);
+					
+					if (auth_no == 1) { 	apr.setApp_doc_memberto3(mem_no1); 
+					System.out.println("check// app_doc_memberto3 ==>"+apr.getApp_doc_memberto3());}
+					if (auth_no == 2) { 	apr.setApp_doc_memberto2(mem_no1); 
+					System.out.println("check// app_doc_memberto2 ==>"+apr.getApp_doc_memberto2());}
+					if (auth_no == 3) { 	apr.setApp_doc_memberto1(mem_no1); 
+					System.out.println("check// app_doc_memberto1 ==>"+apr.getApp_doc_memberto1());}
+					
+						apr.setApp_auth_no(auth_no);
+						apr.setMem_no(mem_no2);
+						
+						System.out.println("check// mem_no ==>" + apr.getMem_no());
+						System.out.println("check// app_doc_no ==>" + apr.getApp_doc_no());
+						System.out.println("check// app_auth_no ==>" + apr.getApp_auth_no());
+						
+						int res_up_apck2N = aps.up_apck2N(apr);
+						System.out.println("check// res_up_apck2N -->"+ res_up_apck2N);
+						model.addAttribute("apck_result",res_up_apck2N);
+					
+					
+					
+					return "redirect:app_my_list2?currentPage=1&mem_no="+mo.getMem_no();
+				}
+				
+				// 대표/관리팀 전용 // 다른 테이블과 연동!!
+				@RequestMapping(value = "app_acc_final")
+				String app_acc_final(String mem_no, int app_doc_no, HttpServletRequest request, Model model) {
+					
+					// 개인정보 조회(접속자)
+					Member_OfficeInfo mo = ms.pfview(mem_no);
+					model.addAttribute("mo",mo);	
+					
+					System.out.println("test app_doc_no ==>" + app_doc_no);
+					Approval app1 = new Approval();
+					app1 = aps.showAppData(app_doc_no);
+					System.out.println("test value check // app1.getMem_no =>"+app1.getMem_no());
+					System.out.println("test value check // app1.getApp_doc_kind =>"+app1.getMem_no());
+					
+					//app_doc_status 변경
+					int up_app_status  = aps.up_app_status(app_doc_no); 
+					
+					// 연차관련 스케쥴 등록!
+					int inshefrap =  aps.inshefrap(app1);
+					System.out.println("test// inshefrap ==>"+inshefrap);
+					
+					//memfrom3 10으로 변경
+					int up_mf310 = aps.upmf310(app_doc_no);
+					
+					return "redirect:app_my_list2?currentPage=1&mem_no=0001";
 				}
 }

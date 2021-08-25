@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-weight:400;font-size:12px;font-family:NanumSquareR;color:#000;vertical-align:baseline;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}      
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-weight:400;font-size:12px;font-family:NanumSquareR;color:#000;vertical-align:baseline;text-decoration:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}      
 
 @font-face{font-family:NanumSquareL;
     font-weight:300;
@@ -20,23 +20,14 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,c
 @font-face{font-family:NanumGothic;font-weight:400;src:url(/static/font/NanumGothic.woff) format("woff")}  
 @font-face{font-family:NanumGothicBold;font-weight:700;src:url(/static/font/NanumGothicBold.woff) format("woff")} 
 
-html{
-	background-color: aliceblue;
-}
-
-.body{
-	margin: 0 auto;
-    width: 1619px;
-}
-
 #hd_container{
-	background-color: aliceblue;
-	width: 1620px; 
-	height: 144px;
+	background-color: white;
+	width: 100%; 
+	height: 100px
 }
 
 #hd_logo{
-	background-color: aliceblue;
+	background-color: white;
 	width: 250px;
 	height: 80px;
 	color: white;
@@ -53,12 +44,13 @@ html{
 }
 
 #hd_dash{
+	width: 1640px;
+	height: 140px;
 	float: left;
+	margin: 0;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px dashed #aeaeae;
-	margin-left: 90px;
-	height: 140px;
 }
 
 #hd_dash ul li{
@@ -66,21 +58,21 @@ html{
 	display: inline-flex;
 	width: 100px;
 	margin-top: 10px;
-	margin-left: 45px;
+	margin-left: 60px;
 	
 }
 
 #bd_container{
-	width: 1620px;
+	width: 1920px;
 	height: auto;
 	margin-bottom: 0;
 }
 
 aside{
 	width: 250px;
+	height: 880px;
 	float: left;
-	background-color: aliceblue;
-	margin-top: 10px;
+	background-color: white;
 }
 
 #as_pbox{
@@ -123,12 +115,11 @@ aside{
 
 #as_ctbox{
 	width: 230px;
-	height: 75px;
+	height: 150px;
 	background-color: white;
 	border-radius: 5px;
-	margin: 30px 30px 0px 10px;
+	margin: 10px 10px;
 	border: 2px dashed #aeaeae;
-	float: right;
 }
 
 #as_etc h1{
@@ -139,7 +130,7 @@ aside{
 
 #as_ctstatus{
 	width: 230px;
-	height: 265px;
+	height: 300px;
 	background-color: white;
 	border-radius: 5px;
 	margin: 10px 10px;
@@ -163,18 +154,24 @@ section{
 }
 
 #sc_cont_up{
-	height: 805px;
+	width: 1640px;
+	height: 670px;
 	display: block;
+	background-color:	whitesmoke;
+	margin: 10px 10px;
 	margin-bottom: 0px;
 	float: left;
 }
 
 #sc_cont_ul{
 	width: 1100px;
-	height: 805px;
+	height: 650px;
 	margin: 0;
+	background-color: whitesmoke;
 	display: inline-block;
+	
 }
+
 
 #sc_cal_todo{
 	width: 1070px;
@@ -182,51 +179,47 @@ section{
 	margin: 10px;
 	margin-right: 0;
 	border-radius: 5px;
+	background-color: white;
+	border: 2px dashed #aeaeae;
 	display: inline-block;
 }
 
-.sc_cal_todo1{
-	width: 330px;
+#sc_cal_todo1{
+	width: 470px;
 	height: 190px;
+	margin: 10px;
 	margin-right: 0;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px dashed #aeaeae;
-	position: absolute;
-	float: left;
-	
-	}
+	display: inline-flex;
+}
 
-.sc_cal_todo2{
-	width: 720px;
+#sc_cal_todo2{
+	width: 580px;
 	height: 190px;
+	margin: 10px;
+	margin-right: 0;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px dashed #aeaeae;
-	float: right;
-	overflow: auto;
-}
-
-.sc_bor_todo{
-	width:1100px;
-	margin: 10px;
-	margin-right: 0px;
-	display: inline-block;
+	display: inline-flex;
 }
 
 #sc_board{
-	width: 560px;
+	width: 1070px;
 	height: 210px;
+	margin: 10px;
+	margin-right: 0;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px dashed #aeaeae;
-	float: left;
 	
 }
 
 #sc_order{
 	width: 1070px;
-	height: 170px;
+	height: 190px;
 	margin: 10px;
 	margin-right: 0;
 	border-radius: 5px;
@@ -236,24 +229,22 @@ section{
 }
 
 #sc_cont_ur{
-	width: px;
+	width: 540px;
 	height: 670px;
 	margin: 0px;
-	background-color: aliceblue;
+	background-color: whitesmoke;
 	float: right;
-	margin-top: 10px;
 	
 }
 
 #sc_msger_box{
-	width: 230px;
+	width: 530px;
 	height: 640px;
-	margin-right: 30px;
+	margin: 10px;
 	margin-left: 0;
 	border-radius: 5px;
 	background-color: white; 
 	border: 2px dashed #aeaeae;
-	overflow: auto;
 }
 
 #sc_clock_box{
@@ -266,10 +257,12 @@ section{
 }
 
 #sc_cont_down{
+	width: 1650px;
 	height: 200px;
 	display: block;
+	background-color: whitesmoke;
 	border-radius: 5px;
-	margin-left: 10px;
+	margin: 10px 10px;
 	margin-top: 0;
 	float: left;
 }
@@ -287,8 +280,8 @@ section{
 }
 
 #sc_booking{
-	width: 496px;
-	height: 210px;
+	width: 680px;
+	height: 180px;
 	float: right;
 	background-color: white;
 	border-radius: 5px;
@@ -296,138 +289,21 @@ section{
 	margin-left: 0px;
 	margin-top: 0;
 	border: 2px dashed #aeaeae;
-	align-items: center;
+	display: inline-flex;
 }
 
-#rsci1{
-	width: 125px;
-	height: 125px;
-	float: left;
-	background-color: #87cefa;
-	border-radius: 50%;
-	text-align: center;
-	vertical-align: middle;
-	align-self: center;
-	display: inline-block;
-	margin: 20px 20px;
-	
-}
-
-#rsci2{
-	width: 125px;
-	height: 125px;
-	float: left;
-	background-color: #ffda89;
-	border-radius: 50%;
-	text-align: center;
-	vertical-align: middle;
-	align-self: center;
-	display: inline-block;
-	margin: 20px 20px;
-	
-}
-
-#rsci3{
-	width: 125px;
-	height: 125px;
-	float: left;
-	background-color: #40e0d0;
-	border-radius: 50%;
-	text-align: center;
-	vertical-align: middle;
-	align-self: center;
-	display: inline-block;
-	margin: 20px 20px;
-	
-}
-
-#rscit1{
+.rsci1{
+	width: 50px;
+	height: 50px;
+	background-color: red;
 	position: relative;
-	top: 18%;
-	left: 6.5%;
+	display: inline-block;
 }
-
-#rscit2{
-	position: relative;
-	top: 18%;
-	left: 7.5%;
-}
-
-#rscit3{
-	position: relative;
-	top: 18%;
-	left: 13%;
-}
-
-#rscitr1{
-	height: 25px;
-	font-size: 0.9em;
-	font-weight: bold;
-}
- #rscith1{
- 	text-align: center;
- }
- 
- #rscitd1{
- 	font-size: 2.2em;
- }
- 
- #rscitr2{
-	height: 25px;
-	font-size: 0.9em;
-	font-weight: bold;
-}
- #rscith2{
- 	text-align: center;
- }
- 
- #rscitd2{
- 	font-size: 2.2em;
- }
- 
- #rscitr3{
-	height: 25px;
-	font-size: 0.9em;
-	font-weight: bold;
-}
- #rscith3{
- 	text-align: center;
- }
- 
- #rscitd3{
- 	font-size: 2.2em;
- }
 
 footer{
 	clear: both;
-	width: 1620px;
+	width: 1920px;
 	height: 180px;
-	background-color: #46586e;
+	background-color: #33ccff;
 	
-}
-
-
-.main_cal>table{
-	border=1px;
-	
-}
-
-#logo1 {
-	width: 200px;
-	height: 80px;
-	margin-top: 30px;
-}
-h3{
-	font-size: 20px;
-}
-
-#wmcontainer2{
-	height: 505px;
-    margin-top: 300px;
-}
-#wmcontainer1{
-	height: 805px;
-}
-#wmcontainer3{
-	height: 785px;
 }

@@ -21,6 +21,7 @@ import com.oracle.s20210702.model.ChatSession;
 import com.oracle.s20210702.model.Mail;
 import com.oracle.s20210702.model.Member_OfficeInfo;
 import com.oracle.s20210702.model.WorkManagement;
+import com.oracle.s20210702.service.ApprovalService;
 import com.oracle.s20210702.service.BoardService;
 import com.oracle.s20210702.service.CalService;
 import com.oracle.s20210702.service.LoginService;
@@ -52,6 +53,9 @@ public class MainController {
 	
 	@Autowired
 	private ChatSession cSession;
+	
+	@Autowired
+	private ApprovalService aps;
 	
 	
 	
@@ -172,6 +176,31 @@ public class MainController {
 		model.addAttribute("listMail",rec_listMail);
 		model.addAttribute("pg",pg);
 		
+		//자원 출력
+		//차량 대수
+		int caravailable = aps.caravailcnt();
+		System.out.println("test// caravailalbe -->" + caravailable);
+		model.addAttribute("carcntnow",caravailable);
+		
+		//상신건수
+		int apuptotal1 = aps.total1(mem_no);
+		System.out.println("test// apuptotal1 -->" + apuptotal1);
+		model.addAttribute("apuptotal1",apuptotal1);
+		
+		//auth_no조회
+		int auth_no = aps.getauthno(mem_no);
+		System.out.println("check// auth_no ==>"+ auth_no);
+		model.addAttribute("auth_no",auth_no);
+		
+		//결재건수!
+		//대표 제외 total
+		int apuptotal2 = aps.total2(mem_no);  
+		//대표 전용 total
+		int apuptotalT = aps.totalT(mem_no);
+		System.out.println("test// apuptotal2 -->" + apuptotal2);
+		model.addAttribute("apuptotal2",apuptotal2);
+		System.out.println("test// apuptotalT -->" + apuptotalT);
+		model.addAttribute("apuptotalT",apuptotalT);
 		
 		//채팅관련
 		cSession.addLoginUser(member.getMem_name());

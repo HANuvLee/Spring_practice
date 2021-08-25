@@ -49,12 +49,12 @@ function addZeros(num, digit) { // 자릿수 맞춰주기
 	        <div id="hd_logo"><a href="main?mem_no=${sessionScope.mem_no }"><img id="logo1" src="img/logo_sample001.png"></a></div>
 	        <div id="hd_dash">
 	            <ul>
-	                <li><a href="wmanage?year_=${caltoday.year_ }&mem_no=${sessionScope.mem_no }"><img src="img/ct_icon.jpg"></a>1</li>
-	                <li><a href="mycal?mem_no=${sessionScope.mem_no }"><img src="img/schedu_icon.jpg"></a>3</li>
-	                <li><a href="list1"><img src="img/board_icon.jpg"></a>9</li>
-	                <li><a href="projectList?mem_no=${sessionScope.mem_no }"><img src="img/work_icon.jpg"></a>1</li>
-	                <li><a href ="mailList?mem_id=${member.mem_id }"><img src="img/mail_icon.jpg"></a>11</li>
-	                <li><a href="approval_main?mem_no=${sessionScope.mem_no }"><img src="img/approv_icon.jpg"></a>1</li>
+	                <li><a href="wmanage?year_=${caltoday.year_ }&mem_no=${sessionScope.mem_no }"><img src="img/ct_icon.jpg"></a></li>
+	                <li><a href="mycal?mem_no=${sessionScope.mem_no }"><img src="img/schedu_icon.jpg"></a></li>
+	                <li><a href="list1"><img src="img/board_icon.jpg"></a></li>
+	                <li><a href="projectList?mem_no=${sessionScope.mem_no }"><img src="img/work_icon.jpg"></a></li>
+	                <li><a href ="mailList?mem_id=${member.mem_id }&mem_no=${sessionScope.mem_no }"><img src="img/mail_icon.jpg"></a></li>
+	                <li><a href="approval_main?mem_no=${sessionScope.mem_no }"><img src="img/approv_icon.jpg"></a></li>
 	            </ul>
 	        </div>
 	        <div id="as_ctbox">

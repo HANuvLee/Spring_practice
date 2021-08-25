@@ -62,8 +62,9 @@ public class MailController {
     private ChatSession cSession;
 	
 	@RequestMapping(value = "mailList", method = {RequestMethod.GET, RequestMethod.POST})
-	public String mailList(Mail mail, String currentPage, Model model, String mem_id, HttpServletRequest request) {
+	public String mailList(Mail mail, String currentPage, Model model, String mem_id, String mem_no, HttpServletRequest request) {
 		System.out.println("MailController mailList Start list...");
+		System.out.println("mail_ctrl mem_no -->" + mem_no);
 		System.out.println("mail_ctrl mem_id -->" + mem_id);
 		Member_OfficeInfo mo = ms.ListMember(mem_id);
 		model.addAttribute("mo",mo);

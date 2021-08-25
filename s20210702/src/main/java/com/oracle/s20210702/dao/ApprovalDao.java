@@ -29,6 +29,31 @@ public interface ApprovalDao {
 
 	int 											apinsert3(Approval apr);
 
-	int 											checkmt1(String mem_no1,String mem_no2, int doc_no);
+	int 											getauthnos(String mem_no1);
+
+	int 											up_apcks1(Approval apr);
+	int 											up_apcks2(Approval apr);
+	int 											up_apcks3(Approval apr);
+
+	List<Approval> 					listApprT(Approval apr);
+
+	int 											totalT(String mem_no);
+
+	int 											up_apcksN1(Approval apr);
+
+	int 											up_apcksN2(Approval apr);
+
+	int 											up_apcksN3(Approval apr);
+
+	Approval 								showAppData(int app_doc_no);
+
+	int 											upstatus(int app_doc_no);
+
+	int 											inshefrap(Approval app1);
+
+	int 											upmf310(int app_doc_no);
+
+	int 											caracnt();
+
 
 }

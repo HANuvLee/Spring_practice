@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+tr{
+	border-bottom: 1px solid #aeaeae;
+	height: 50px;
+}
+table{
+	width: 1400px;
+	margin-left: 100px;
+	margin-top: 60px;
+}
+th, td{
+	vertical-align: middle;
+	text-align: center;
+}
+.swfbtn{
+	float: right;
+	margin-top: 50px;
+}
+#sc_cont_ul3{
+	width: 1400px;
+    height: 805px;
+    margin: 0;
+    display: inline-block;
+}
+#sc_cont_ul3{
+	width: 1400px;
+    height: 805px;
+    margin: 0;
+    display: inline-block;
+}
+.appbtn{
+	text-align: center;
+	margin-top: 50px;
+}
+th{
+	background-color: #ddd;
+}
+.currentpage {
+	text-align: center;
+}

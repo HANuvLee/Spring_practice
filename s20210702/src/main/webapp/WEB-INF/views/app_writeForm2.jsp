@@ -9,13 +9,14 @@
 <link href="css/css_main.css" rel="stylesheet">
 <link href="css/app_main.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/29ccb048c9.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="resources/css/scheWriteForm.css">
 </head>
 <body>
+<div class="body">
 <c:if test="${sessionScope.mem_no ne null }">
 <%@ include file="/WEB-INF/viewpart/header.jsp"%>
 
 	<div id="wmcontainer1">
-	 <h3>writeForm2 (출장)</h3>
 	 <form action="app_write2" method="post">
 	 <table>
 	 <tr>
@@ -126,11 +127,11 @@
 	 부장 : <select name="app_doc_memberto2"><option value="0003">홍승엽 부장</option><option value="0004">강승석 부장</option></select> 
 	 대표: 관리자</td>
 	 </tr>
-	 <tr>
-	 <th><input type="submit" value="결재 상신"> <input type="reset" value="재작성"></th>
-	 </tr>
 	 
 	 </table>
+	 <div class="appbtn">
+	 	<input type="submit" value="결재 상신"> <input type="reset" value="재작성">
+	 </div>
 	 </form>
 	 </div>
    <%@ include file="/WEB-INF/viewpart/footer.jsp"%>
@@ -140,6 +141,6 @@
 	response.sendRedirect("loginForm");
 %>
 </c:if>	
-
+</div>
 </body>
 </html>

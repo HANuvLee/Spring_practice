@@ -9,7 +9,7 @@
 		function loginUser() {
 			
 			var	mem_name = $("#mem_name").val();
-			//$('.reload').remove();
+			$('.reload').remove();
 			
 			$.ajax({
 				url: "http://localhost:8282/s20210702/loginunread_count",
@@ -106,7 +106,7 @@
 					});	
 				}
 			});
-			//setTimeout("loginUser()",500);	
+			setTimeout("loginUser()",500);	
 		};
 		
 	

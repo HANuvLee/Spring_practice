@@ -1,0 +1,110 @@
+@charset "UTF-8";
+h5{
+	margin-right: 192px;
+}
+.table{
+	border-top: 4px solid #a0a0a0;
+	width: 1600px;
+	margin-top: 40px;
+	padding: 30px;
+	padding-top: 100px;
+	text-align: center;
+	
+}
+#sc_cont_up{
+	height: 670px;
+	display: block;
+	margin: 10px 10px;
+	margin-bottom: 0px;
+}
+
+#sc_cont_ul{
+	width: 1600px;
+	height: 805px;
+	margin: 0;
+	display: inline-block;
+}
+#project_name{
+	height: 20px;
+	width: 260px;
+}
+#project_start{
+	height: 25px;
+	width: 262px;
+	padding-left: 2px;
+}
+#project_end{
+	height: 25px;
+	width: 262px;
+	padding-left: 2px;
+	
+}
+#project_excost{
+	height: 20px;
+	width: 260px;
+	
+}
+#project_realcost{
+	height: 20px;
+	width: 260px;
+
+}
+#project_company{
+	height: 20px;
+	width: 260px;
+	
+}
+#project_progress{
+	height: 20px;
+	width: 260px;
+	
+}
+.row .col1{
+	margin-right: 15px;
+}
+.row2 .col1{
+	margin-right: 35px;
+}
+.row3 .col1{
+	margin-right: 35px;
+}
+.row4 .col1{
+	margin-right: 35px;
+}
+.row5 .col1{
+	margin-right: 35px;
+}
+.row6 .col1{
+	margin-right: 55px;
+}
+.row7 .col1{
+	margin-right: 35px;
+}
+.cell{
+	font-size: 20px;
+}
+.file{
+	text-align: right;
+	margin-top: 30px;
+	margin-right: 100px;
+}
+.path{
+	float: left;
+}
+.items{
+	text-align: right;
+	margin-top: 40px;
+}
+.button{
+	width:60px;
+	background: white;
+	position: relative;
+	margin-right: 193px;
+	text-align: center;
+	border-radius: 10px;
+/* 	transition : all 0.1s ease-in-out; */
+	font-size:13px;
+/* 	box-shadow: -6px -6px 5px rgba(228,226,226,0.8), 6px 6px 10px rgba(0,0,0,0.2); */
+	color: #414141;
+	line-height : 25px;
+}

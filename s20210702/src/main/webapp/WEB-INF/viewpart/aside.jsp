@@ -32,7 +32,7 @@
 
             </div>
             <div id="as_etc">
-                출 근 체 크
+               <h3> 출 근 체 크</h3>
                     <hr>
                <a href="cin_btn?mem_no=${mo.mem_no }"><img alt="출근" src="img/c_in.png" width="100px"></a> <a href="tout_btn?mem_no=${mo.mem_no }"><img alt="퇴근" src="img/t_out.png" width="100px"></a><p>
                     
@@ -42,7 +42,7 @@
             </div>
             
             <div id="as_ctstatus">
-				<h1>근태현황<i class="fas fa-chevron-circle-right fa-1x"></i></h1>
+				<h3>근태현황<i class="fas fa-chevron-circle-right fa-1x"></i></h3>
 				<hr>
                 <table>
                     <tr>

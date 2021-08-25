@@ -20,6 +20,10 @@
 	select Count(*) FROM APPROVAL_DOC where APP_DOC_MEMBERTO1=#{mem_no} or APP_DOC_MEMBERTO2=#{mem_no}
 </select>
 
+<select id="ssApprtotalT" resultType="int" parameterType="String">
+	select Count(*) FROM APPROVAL_DOC where MEMFROM2 = 1
+</select>
+
 <select id="ssApprList2" parameterType="Appr" resultType="Appr">
  	select * 
          from (select rownum rn, a.* 
@@ -28,11 +32,19 @@
     	 where rn between #{start} and  #{end}     
     	 and (APP_DOC_MEMBERTO1 =#{mem_no}
        or APP_DOC_MEMBERTO2 =#{mem_no})
+</select>
 
+<select id="ssApprListT" parameterType="Appr" resultType="Appr">
+ 	select * 
+         from (select rownum rn, a.* 
+               from (select * from APPROVAL_DOC order by APP_DOC_DATE desc) a
+              ) 
+    	 where rn between #{start} and  #{end}     
+    	 and MEMFROM2= 1
 </select>
 
 <insert id="ssapprinsert1" parameterType="Appr">
-INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL, #{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date})
+INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL, #{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date},'','','')
 </insert>
 
 <insert id="ssapprinsert11" parameterType="int">
@@ -51,7 +63,7 @@ INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL, #{app_doc_kind}, APP_FILE_
 
 
 <insert id="ssapprinsert2" parameterType="Appr">
-INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date})
+INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},#{sch_start_date},#{sch_end_date},'','','')
 </insert>
 
 <update id="sscarinsert2" parameterType="Appr">
@@ -64,11 +76,57 @@ INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_S
 
 
 <insert id="ssapprinsert3" parameterType="Appr">
-	INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},'','')
+	INSERT INTO APPROVAL_DOC VALUES (APP_DOC_SEQ.NEXTVAL,#{app_doc_kind}, APP_FILE_SEQ.NEXTVAL,#{app_doc_title},#{app_doc_memberto1},#{app_doc_memberto2},#{app_doc_content},'상신완료',sysdate,#{mem_no},'','','','','')
 </insert>
 
-<select id="sscheckmt1" parameterType="Appr">
- select count(*) from approval_doc where mem_no=#{mem_no] and app_doc_memberto1 = #{app_doc_memberto1} and app_doc_no = #{app_doc__no}  
+<select id="ssgetAuthno" parameterType="String" resultType="int">
+	SELECT APP_AUTH_NO FROM APPROVAL_AUTH WHERE MEM_NO = #{mem_no1}
+</select>
+
+<update id="ssupApck1" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM3 = '1' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<update id="ssupApck2" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM2 = '1' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<update id="ssupApck3" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM1 = '1' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<update id="ssupApckN1" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM3 = '2' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<update id="ssupApckN2" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM2 = '2' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<update id="ssupApckN3" parameterType="Appr">
+	UPDATE APPROVAL_DOC SET MEMFROM1 = '2' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<select id="ssShowAdata" parameterType="int" resultType="Appr">
+	SELECT * FROM APPROVAL_DOC WHERE APP_DOC_NO = #{app_doc_no}
+</select>
+
+<update id="ssupstat" parameterType="int">
+	UPDATE APPROVAL_DOC SET APP_DOC_STATUS = '승인 완료' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<insert id="ssinshefrap" parameterType="Appr">
+	INSERT INTO SCHEDULE VALUES (#{app_doc_kind},sch_seq.nextval,#{app_doc_title},#{sch_start_date},#{sch_end_date},#{app_doc_content},#{mem_no})
+</insert>
+
+<update id="ssmf310" parameterType="int">
+	UPDATE APPROVAL_DOC SET MEMFROM3 = '10' WHERE APP_DOC_NO = #{app_doc_no}
+</update>
+
+<select id="sscarcnt" resultType="int">
+	<![CDATA[
+	SELECT COUNT(*) FROM CAR WHERE (CAR_END < SYSDATE) OR (CAR_START > SYSDATE) OR (CAR_END IS NULL)
+	]]>
 </select>
 
 </mapper>

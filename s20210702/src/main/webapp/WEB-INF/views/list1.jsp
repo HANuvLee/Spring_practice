@@ -9,16 +9,17 @@
 <link href="css/css_main.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <script src="https://kit.fontawesome.com/29ccb048c9.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="resources/css/mailbox.css">
+<!-- <link rel="stylesheet" href="resources/css/mailbox.css"> -->
 <link rel="stylesheet" href="resources/css/board.css">
+<link rel="stylesheet" href="resources/css/list1.css">
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-</head><body>
+</head>
+<body>
 <div class="body">
 <%@ include file="/WEB-INF/viewpart/header.jsp"%>
-	<div id="sc_cont_up">
+<%-- <%@ include file="/WEB-INF/viewpart/aside.jsp"%>  --%>
+	<div id="sc_list_cont_up">
 		<div id="sc_cont_ul">
-
-
 			<c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 			<%-- <%-- <table>
 				<tr>
@@ -32,26 +33,25 @@
 					<c:set var="num" value="${num - 1 }"></c:set>
 				</c:forEach>
 			</table> --%>
-			<div class="mailbotton">
-				<a href="writeForm1">글쓰기</a>
-			</div>
-			
-			<div id="table">
-				<div class="row">
-						<span class="cell col1">번호</span>
-						<span class="cell col2">제목</span> 
-						<span class="cell col3">작성시간</span>
-				</div>
-			 	<c:forEach var="bd" items="${listBoard }">
-					<div class="row">
-						<span class="cell col1">${num }</span>
-						<span class="cell col2"><a href="content1?board_no=1&post_no=${bd.post_no}">${bd.post_title}</a></span> 
-						<span class="cell col3"><fmt:formatDate value="${bd.post_date }" pattern="yy-MM-dd  hh:mm" /></span>
+			<div id="listtable">
+					<div class="listHead">
+						<span class="cell head1 verticalLine">번호</span>
+						<span class="cell head2 verticalLine">제목</span> 
+						<span class="cell head3 verticalLine">작성시간</span>
 					</div>
+				 	<c:forEach var="bd" items="${listBoard }">
+						<div class="tablelist">
+							<span class="cell col1">${num }</span>
+							<span class="cell col2"><a href="content1?board_no=1&post_no=${bd.post_no}">${bd.post_title}</a></span> 
+							<span class="cell col3"><fmt:formatDate value="${bd.post_date }" pattern="yy-MM-dd  hh:mm" /></span>
+						</div>
 					<c:set var="num" value="${num - 1 }"></c:set>
-				</c:forEach>
-			 </div>
-			
+					</c:forEach>
+					<div class="writebotton">
+						<a href="writeForm1">글쓰기</a>
+					</div>
+				</div>
+			</div>
 			<div class="currentpage">
 				<c:if test="${pg.startPage > pg.pageBlock }">
 					<a href="list?currentPage=${pg.startPage-pg.pageBlock}">[이전]</a>
@@ -60,11 +60,10 @@
 					<a class="currentpage1" href="list1?currentPage=${i}">[${i}]</a>
 				</c:forEach>
 				<c:if test="${pg.endPage < pg.totalPage }">
-					<a href="list?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>
+					<a href="list?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>					
 				</c:if>
 			</div>
 		</div>
-	</div>
 <%@ include file="/WEB-INF/viewpart/footer.jsp"%>
 </div>
 </body>

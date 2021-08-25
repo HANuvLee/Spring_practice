@@ -187,32 +187,217 @@ public class ApprovalDaoImpl implements ApprovalDao {
 		}
 		return apresult3;
 	}
-
-	//mt1 check!
+	
+	
+	//authno 확인
 	@Override
-	public int checkmt1(String mem_no1,String mem_no2, int doc_no) {
-		Approval apr = null;
-		apr.setApp_doc_no(doc_no);
-		apr.setApp_doc_memberto1(mem_no1);
-		apr.setMem_no(mem_no2);
+	public int getauthnos(String mem_no1) {
+		System.out.println("apprdi getAuthno start");
+		int auth_nod = 0;
 		
-		System.out.println("doc_no -->" + apr.getApp_doc_no());
-		System.out.println("memberto1 -->" + apr.getApp_doc_no());
-		System.out.println("mem_no -->" + apr.getMem_no());
-		
-		int checktest1=0;
 		try {
-		
-		
-		checktest1=session.selectOne("sscheckmt1",apr);
-		System.out.println("checktest1 ==> "+ checktest1);		
+			auth_nod = session.selectOne("ssgetAuthno",mem_no1);
+			System.out.println("test//auth_nod ==>" + auth_nod);
 			
 		} catch (Exception e) {
-			System.out.println("mtcheck1 Dao IMPL Exception ->" + e.getMessage());
+			System.out.println("getauthnod app Dao IMPL Exception ->" + e.getMessage());
 		}
 		
-		return checktest1;
+		return auth_nod;
 	}
+
+	//app_check 테이블 업데이트!
+	@Override
+	public int up_apcks1(Approval apr) {
+		//관리자급 // app_check update액션
+		
+		int up_apckd1 = 0;
+	
+		try {
+			up_apckd1 = session.update("ssupApck1",apr);
+		} catch (Exception e) {
+			System.out.println("up_APCKD1 app Dao IMPL Exception ->" + e.getMessage());
+		}
+		
+		
+		return up_apckd1;
+	}
+
+	@Override
+	public int up_apcks2(Approval apr) {
+	//부장급 // app_check update액션
+		
+		int up_apckd2 = 0;
+	
+		try {
+			up_apckd2 = session.update("ssupApck2",apr);
+		} catch (Exception e) {
+			System.out.println("up_APCKD2 app Dao IMPL Exception ->" + e.getMessage());
+		}
+		
+		
+		return up_apckd2;
+		
+		
+	}
+
+	@Override
+	public int up_apcks3(Approval apr) {
+	// 팀장급 // app_check update액션
+		
+		int up_apckd3 = 0;
+	
+		try {
+			up_apckd3 = session.update("ssupApck3",apr);
+		} catch (Exception e) {
+			System.out.println("up_APCKD3 app Dao IMPL Exception ->" + e.getMessage());
+		}
+		
+		
+		return up_apckd3;
+	}
+
+	//대표 전용 리스트
+	@Override
+	public List<Approval> listApprT(Approval apr) {
+		List<Approval> apprListT = null;
+		System.out.println("ApprDaoImpl listApprT Start ..." );
+		
+		try {
+			// Naming Rule 
+			apprListT = session.selectList("ssApprListT", apr);
+		} catch (Exception e) {
+			System.out.println("APPRDaoImpl apprList2 Exception->"+e.getMessage());
+		}
+		return apprListT;
+	}
+
+	@Override
+	public int totalT(String mem_no) {
+		int totT = 0;
+		System.out.println("APPRDaoImpl Start totalT..." );
+		try {
+
+			 totT = session.selectOne("ssApprtotalT",mem_no);
+			System.out.println("APPRDaoImpl Start totalT..." );
+		} catch (Exception e) {
+			System.out.println("APPRDaoImpl totalT Exception->"+e.getMessage());
+		}
+		
+		return totT;
+	}
+
+	@Override
+	public int up_apcksN1(Approval apr) {
+		// 대표급 // app_check update액션
+		
+		int up_apckdN1 = 0;
+	
+		try {
+			up_apckdN1 = session.update("ssupApckN1",apr);
+		} catch (Exception e) {
+			System.out.println("up_APCKDN1 app Dao IMPL Exception ->" + e.getMessage());
+		}
+		
+		
+		return up_apckdN1;
+	}
+
+	@Override
+	public int up_apcksN2(Approval apr) {
+		// 부장급 // app_check update액션
+		
+		int up_apckdN2 = 0;
+	
+		try {
+			up_apckdN2 = session.update("ssupApckN2",apr);
+		} catch (Exception e) {
+			System.out.println("up_APCKDN2 app Dao IMPL Exception ->" + e.getMessage());
+		}
+		
+		
+		return up_apckdN2;
+	}
+
+	@Override
+	public int up_apcksN3(Approval apr) {
+		// 팀장급 // app_check update액션
+		
+				int up_apckdN3 = 0;
+			
+				try {
+					up_apckdN3 = session.update("ssupApckN3",apr);
+				} catch (Exception e) {
+					System.out.println("up_APCKDN3 app Dao IMPL Exception ->" + e.getMessage());
+				}
+				
+				
+				return up_apckdN3;
+	}
+
+	
+	//결제 최종승인후 기본정보 읽어오기
+	@Override
+	public Approval showAppData(int app_doc_no) {
+		Approval showADATA = new Approval();
+		
+		try {
+			showADATA = session.selectOne("ssShowAdata",app_doc_no);
+		} catch (Exception e) {
+			System.out.println("최종승인 완료 후 기본정보 읽어오기 ! 오류 -->"+ e.getMessage());
+		}
+		
+		
+		return showADATA;
+	}
+
+	//status 변경
+	@Override
+	public int upstatus(int app_doc_no) {
+		int upstat  = 0;
+		
+		try {
+			upstat = session.update("ssupstat",app_doc_no);
+		} catch (Exception e) {
+			System.out.println("최종승인-> 스테이터스변경 오류 -->"+ e.getMessage());
+		}
+		
+		return upstat;
+	}
+
+	@Override
+	public int inshefrap(Approval app1) {
+		int inshfrap = 0;
+		
+		try {
+			inshfrap = session.insert("ssinshefrap",app1);
+		} catch (Exception e) {
+			System.out.println("최종승인->스케쥴 테이블에 밀어넣기 에러?-->"+e.getMessage());
+		}
+		return 0;
+	}
+
+	// memfrom3을 10으로 변경
+	@Override
+	public int upmf310(int app_doc_no) {
+		int up_mf310 = 0;
+		
+		try {
+			up_mf310 = session.update("ssmf310",app_doc_no);
+		} catch (Exception e) {
+			System.out.println("최종승인->memfrom3을 10으로 에러?-->"+e.getMessage());
+		}
+		return up_mf310;
+	}
+
+	//메인화면 car cnt
+	@Override
+	public int caracnt() {
+		int caravailcnt = session.selectOne("sscarcnt");
+		return caravailcnt;
+	}
+
+	
 	
 	
 	

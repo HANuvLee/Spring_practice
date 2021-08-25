@@ -50,7 +50,7 @@
 			 <c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 			<div class="mailbotton">
 				
-				<button id="write" type="button" onclick="eraseMail()">삭제</button>
+				<button id="write" class="delbutton" type="button" onclick="eraseMail()">삭제</button>
 			</div>
 			<div id="mailbox">
 			<a id="write" href="mailWrite?mem_id=${member.mem_id}">메일쓰기</a>

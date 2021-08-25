@@ -29,7 +29,27 @@ public interface ApprovalService {
 
 	int			 							apinsert3(Approval apr);
 
-	int 										checkmt1(String mem_no1,String mem_no2, int doc_no);
+	int 										getauthno(String mem_no1);
+
+	int 										up_apck2(Approval apr);
+
+	List<Approval> 				listApprT(Approval apr);
+
+	int 										totalT(String mem_no);
+
+	int 										up_apck2N(Approval apr);
+
+	Approval 							showAppData(int app_doc_no);
+
+	int 										up_app_status(int app_doc_no);
+
+	int 										inshefrap(Approval app1);
+
+	int 										upmf310(int app_doc_no);
+
+	int 										caravailcnt();
+
+	
 
 	
 

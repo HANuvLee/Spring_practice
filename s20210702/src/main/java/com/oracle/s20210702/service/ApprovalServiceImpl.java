@@ -35,6 +35,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return apprList1;
 	}
 
+	//결재 해야할 목록 리스팅2
 	@Override
 	public int total2(String mem_no) {
 		System.out.println("APPRServiceImpl Start total2..." );
@@ -120,16 +121,112 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return apresult3;
 	}
 
-	//결재승인중 mt1인지 2인지 체크
+	//auth no 확인
 	@Override
-	public int checkmt1(String mem_no1,String mem_no2, int doc_no) {
-		System.out.println("service impl!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		System.out.println("test mem_no1-->"+mem_no1);
-		System.out.println("test mem_no2-->"+mem_no2);
-		System.out.println("test doc_no  -- >"+doc_no);
-		
-		int cmtresult1 = apd.checkmt1(mem_no1,mem_no2,doc_no);
-		return cmtresult1;
+	public int getauthno(String mem_no1) {
+		System.out.println("apprsi getauthno start");
+		int auth_nos=0;
+		auth_nos = apd.getauthnos(mem_no1);
+		return auth_nos;
 	}
+	
+	//app_check update (memberto2,3,1)
+	@Override
+	public int up_apck2(Approval apr) {
+		System.out.println("appsi up_apck Start!!!!!");
+		System.out.println("apr data check!! auth_no==>"+apr.getApp_auth_no());
+		System.out.println("apr data check!! doc_no==>"+apr.getApp_doc_no());
+		int up_apcks = 0;
+		
+		if(apr.getApp_auth_no() == 1) {
+			up_apcks = 10 + apd.up_apcks1(apr);
+		}
+		if(apr.getApp_auth_no() == 2) {
+			up_apcks = 20 + apd.up_apcks2(apr);
+		}
+		if(apr.getApp_auth_no() == 3) {
+			up_apcks = 30 + apd.up_apcks3(apr);
+		}
+		
+		
+		return up_apcks;
+	}
+
+	///대표용 결재목록 리스트
+	@Override
+	public List<Approval> listApprT(Approval apr) {
+		List<Approval> apprListT = null;
+		System.out.println("ApprServiceImpl listT Start..." );
+		apprListT = apd.listApprT(apr);
+		System.out.println("ApprServiceImpl listT apprList.size()->" +apprListT.size());
+		return apprListT;
+	}
+
+	@Override
+	public int totalT(String mem_no) {
+		System.out.println("APPRServiceImpl Start totalT..." );
+		int totCntT = apd.totalT(mem_no);
+		System.out.println("APPRServiceImpl total totCnt->"+totCntT );
+		return totCntT;
+	}
+
+	@Override
+	public int up_apck2N(Approval apr) {
+		System.out.println("appsi up_apck Start!!!!!");
+		System.out.println("apr data check!! auth_no==>"+apr.getApp_auth_no());
+		System.out.println("apr data check!! doc_no==>"+apr.getApp_doc_no());
+		int up_apckNs = 0;
+		
+		if(apr.getApp_auth_no() == 1) {
+			up_apckNs = 10 + apd.up_apcksN1(apr);
+		}
+		if(apr.getApp_auth_no() == 2) {
+			up_apckNs = 20 + apd.up_apcksN2(apr);
+		}
+		if(apr.getApp_auth_no() == 3) {
+			up_apckNs = 30 + apd.up_apcksN3(apr);
+		}
+		
+		
+		return up_apckNs;
+	}
+
+	@Override
+	public Approval showAppData(int app_doc_no) {
+		Approval showADATA = new Approval();
+		showADATA = apd.showAppData(app_doc_no);
+		
+		return showADATA;
+	}
+
+	//app_doc_status 변경
+	@Override
+	public int up_app_status(int app_doc_no) {
+		int upsta = apd.upstatus(app_doc_no);
+		return upsta;
+	}
+
+	//승인난 스케쥴을 스케쥴테이블에 밀어넣기
+	@Override
+	public int inshefrap(Approval app1) {
+		int inshefrap = apd.inshefrap(app1);
+		return inshefrap;
+	}
+
+	//memfrom3 을 10으로 변경
+	@Override
+	public int upmf310(int app_doc_no) {
+		int up_mf310 = apd.upmf310(app_doc_no);
+		return up_mf310;
+	}
+
+	//메인화면 카 available cnt
+	@Override
+	public int caravailcnt() {
+		int carcnt = apd.caracnt();
+		return carcnt;
+	}
+
+	
 
 }

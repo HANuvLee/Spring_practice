@@ -34,7 +34,7 @@
 	    <div id="sc_cont_ul">
 	        <div id="sc_cal_todo">
 	        	<div class="sc_cal_todo1">
-						${caltoday.month_+1 }월 일정<p>
+						<h3>${caltoday.month_+1 }월 일정</h3><p>
 					<table class="main_cal" border="1px">
 						<thead>
 							<tr>
@@ -73,7 +73,7 @@
 					</table>
            		</div>       
                 	<div class="sc_cal_todo2">
-                    	<h2>일정 리스트</h2>
+                    	<h3>일정 리스트</h3>
                     		<c:forEach var="test1" items="${callistall}">
 								<c:if test="${test1.todocnt != 0 }">
 									${test1.day_ }일 : ${test1.todocnt }개 일정 있음. <br>
@@ -83,7 +83,7 @@
 					</div>
 				</div>
                 <div class="sc_bor_todo">
-                	<div id="sc_board"><a href="list1">게시판</a><p>
+                	<div id="sc_board"><h3><a href="list1">게시판</a></h3><p>
                     	<ul>
                  			<c:forEach var="board" items="${recentlistBoard1 }">
 								<li><a href="content1?board_no=1&post_no=${board.post_no }">${board.post_title } /written by. ${board.mem_name  } ${board.mem_rank }</a></li>
@@ -93,11 +93,32 @@
                     
                     </div>
                     <div id="sc_cont_down">
-<%--                 <div id="sc_email"><a href="mailList?mem_id=${mo.mem_id}">전자메일</a></div> --%>
-                			<div id="sc_booking">자원예약</div>
+                			<div id="sc_booking"><h3><span id="title_scbooking">자원예약</span></h3>
+                			<hr>
+                			<div id="rsci1"><table id="rscit1"><tr id="rscitr1"><th id="rscith1">[이용 가능 차량]</th></tr><tr id="rscitr1"><td id="rscitd1">${carcntnow}</td></tr></table></div>
+                			<div id="rsci2"><table id="rscit2"><tr id="rscitr2"><th id="rscith2">[결재 상신 건수]</th></tr><tr id="rscitr2"><td id="rscitd2">${apuptotal1 }</td></tr></table></div>
+                			<div id="rsci3"><table id="rscit3"><tr id="rscitr3"><th id="rscith3">[내 결재 건수]</th></tr>	<tr id="rscitr3"><td id="rscitd3">
+                			<c:if test="${auth_no ==1 }">${apuptotalT}</c:if> 
+                			<c:if test="${auth_no !=1 }">${apuptotal2}</c:if>
+                			</td></tr></table></div>
+                			
+                			</div>
+                			
             		</div>
             	</div>
-                	<div id="sc_order">전자결재</div>
+                	<div id="sc_order"><h3>전자메일</h3>
+                	<hr>
+                	<table>
+                	<c:forEach var="mail" items="${listMail}">
+					<tr>                	
+                	<td>[${mail.mail_no}]. ${mail.mail_title} </td> 
+                	<td> 보낸사람 : ${mail.mem_name }  </td>
+                	<td> 보낸 시간 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${mail.mail_send_time }"/> </td>
+                	</tr>
+                	</c:forEach>
+                	</table>
+                	
+                	</div>
 		
 		</div> 
 	</div>

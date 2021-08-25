@@ -28,8 +28,13 @@
 <c:if test="${test1.todocnt != 0 }">
 ${test1.day_ }일 :
 <c:forEach var="scheoncal" items="${test1.lishe }" varStatus="sno">
-<span> ${scheoncal.schedule_name} <p> </span> ${scheoncal.schedule_start} ~ ${scheoncal.schedule_end}
-					</c:forEach> 
+<span> ${scheoncal.schedule_name} <p> </span> 
+<fmt:parseDate value='${scheoncal.schedule_start}' var='schedule_start' pattern="yyyy-MM-dd HH:mm:ss" /> 
+<fmt:formatDate value="${schedule_start}" pattern="MM-dd HH:mm"/>  ~ 
+<fmt:parseDate value='${scheoncal.schedule_end}' var='schedule_end' pattern="yyyy-MM-dd HH:mm:ss" /> 
+<fmt:formatDate value="${schedule_end}" pattern="MM-dd HH:mm"/>
+<p>
+</c:forEach> 
 
  <br>
 </c:if>

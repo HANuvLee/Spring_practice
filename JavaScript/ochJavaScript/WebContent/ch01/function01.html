@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+
+	function addNum(x,y,z) {
+		if(y === undefined)//함수 호출 시 y에 해당하는 인수가 전달되지 않은 경우,
+			y = 0; 		   //변수 y의 값을 undefined에서 0으로 변경함
+		
+		
+		if(z === undefined) //함수 호출 시 z에 해당하는 인수가 전달되지 않은 경우, undefined 구별시 === 3개!
+			z = 0;          // 변수 z의 값을 undefined에서 0으로 변경함
+		
+		return x+y+z;
+	}
+	document.write("addNum(1,2,3) -> " + addNum(1,2,3) + "<br>");
+	document.write("addNum(1,2)->" + addNum(1,2) + "<br>");
+	document.write("addNum(1)->" + addNum(1) + "<br>") 
+
+</script>
+<body>
+<h1>function01</h1>
+	parameter 전달
+</body>
+</html>

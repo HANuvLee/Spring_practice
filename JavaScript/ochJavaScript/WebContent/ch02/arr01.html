@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+	//배열 3가지 이용방법 
+	
+	var arrList =[1, true, "JavaScript"]; //배열 리터럴을 이용하는 방법
+	var arrObj = Array(1, true, "JavaScript"); // Array 객체의 생성자를 이용하는 방법
+	var arrNewObj = new Array(1, true, "JavaScript"); // new연산자를 이횽한 Array 객체 생성 방법
+	
+	document.write(typeof arrList + "<br>");// 1,true,JavaScript
+	document.write(typeof arrObj + "<br>");// 1,true,JavaScript
+	document.write(typeof arrNewObj + "<br>");// 1,true,JavaScript
+	document.write(arrList + "<br>"); // 1,true,JavaScript
+	document.write(arrObj + "<br>"); // 1,true,JavaScript
+	document.write(arrNewObj);
+
+</script>
+<body>
+<h1>arr01</h1>
+</body>
+</html>

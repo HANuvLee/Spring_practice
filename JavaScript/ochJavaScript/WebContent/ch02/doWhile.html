@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+
+	var i = 1; j = 1;
+	
+	while (i > 3) { //변수 i의 초기값은 1이기 때문에 이 while문은 한번도 실행x
+		document.write("i : " + (i++) + "<br>");
+	}
+	
+	i = 10;
+	while (i > 3){
+		document.write("i : " + (i++) + "<br>");
+		if(i ==  13)
+			break;
+	}
+	
+	i = 1;
+	do { //변수 j의 초깃값은 1 따라서 이 문장은 단 한번만 실행
+		document.write("j: " + (j++) + "<br>");
+	}while (j > 3)
+</script>
+<body>
+<h1>doWhile</h1>
+</body>
+</html>

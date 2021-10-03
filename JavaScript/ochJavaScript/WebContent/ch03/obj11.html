@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	//join 배열의 모든 요소를 하나의 문자열로 변환, 구분자로 배열 요소사이를 구분 지음
+	var arr = [1,true,"JavaScript",'End'];
+	document.write("arr.join()->"+ arr.join()+"<br>");
+	document.write("arr.join(' + ')->" + arr.join(' + ')+"<br>");
+	document.write("arr.join(' ')->" + arr.join(' ')+"<br>");
+	document.write("arr.join('')->" + arr.join('')+"<hr>");
+	//전달받은 시작 인덱스부터 종료 인덱스 바로 앞까지 모든 배열요소를 추출하여 새로운 배열 반환
+	document.write("arr.slice(1, 2)->" + arr.slice(1, 2)+"<br>");
+	document.write("arr.slice(1, 3)->" + arr.slice(1, 3)+"<br>");
+	//start, end ->End없으면 끝까지 가라
+	document.write("arr.slice(1)->" + arr.slice(1)+"<hr>");
+	
+	document.write("arr.toString()->" + arr.toString()+"<hr>");
+</script>
+</head>
+<body>
+<h1>obj11</h1>
+Array예제
+</body>
+</html>

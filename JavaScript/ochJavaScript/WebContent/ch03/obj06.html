@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var gildong = {
+		age : 18
+	};
+	gildong.age = 20;
+	document.write("1.gildong.age -> "+gildong.age + "<br>"); //20
+	//setter						메소드명
+	Object.defineProperty(gildong, "changeAge", {
+		set : function(n) {
+			this.age = this.age - n;
+		}
+
+	});
+	gildong.changeAge = 5; //위에 change함수로 5를 가지고 this.age로 들어감
+	document.write("<p>2.gildong.age->" + gildong.age);
+	
+	//getter						메소드명
+	Object.defineProperty(gildong, "americanAge", {
+		get : function() {
+			return this.age - 1;
+		}
+
+	});
+	document.write("<br>3.gildong.americanAge->" + gildong.americanAge); //14
+</script>
+</head>
+<body>
+	<h1>obj06</h1>
+	getter/setter 메소드 예제
+</body>
+</html>

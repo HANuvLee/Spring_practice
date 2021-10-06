@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>이벤트 리스터 삭제</h1>
+<p>아래 버튼에 마우스를 올리거나 클릭해 보세요!</p>
+<button id="btn">삭제 버튼</button>
+<p id="text"></p>
+
+<script>
+	var btn = document.getElementById("btn");
+	//Listener는 이벤트 발생을 기다리는것
+	btn.addEventListener("click", clickBtn);
+	btn.addEventListener("mouseover", mouseoverBtn);
+	btn.addEventListener("mouseout", mouseoutBtn);
+	
+	//이벤트리스너 삭제로 인해 클릭하여 삭제이후 동작이 되지 않음
+	function clickBtn() {
+		btn.removeEventListener("mouseover", mouseoverBtn);
+		btn.removeEventListener("mouseout", mouseoutBtn);
+		document.getElementById("text").innerHTML = "이벤트 리스너가 삭제되었어요!";
+	}
+	function mouseoverBtn() {
+		document.getElementById("text").innerHTML = "버튼 위에 마우스가 있네요!";
+	}
+	function mouseoutBtn() {
+		document.getElementById("text").innerHTML = "버튼 밖으로 마우스가 나갔어요!";
+	}
+</script>
+</body>
+</html>

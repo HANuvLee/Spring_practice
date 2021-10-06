@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>dom01</h1>
+	<h1>id 이용 선택</h1>
+	<ul>
+		<li>첫번째 Item</li>
+		<li id="even">두번째 Item</li>
+		<li>세번째 Item</li>
+		<li>네번째 Item</li>
+		<li>5번째 Item</li>
+	</ul>
+	<p id="change">교환</p>
+	<script type="text/javascript">
+		// 해당 ID를 가지고 있는 첫번째 요소만 선택
+		var selItemId = document.getElementById("even"); //id가 even인 태그
+		var selPId = document.getElementById("change");
+		// 해당 name를 가지고 있는 요소 선택
+		selItemId.style.color = "orange";
+		selPId.innerHTML = "이 문장 대체"; //html태그 내용들
+	</script>
+</body>
+</html>

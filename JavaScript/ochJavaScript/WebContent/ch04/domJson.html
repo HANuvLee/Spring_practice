@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	//***중요한 개념***
+	//Json , 데이터를 구조화된 데이터로 표기하기 위한 표기법
+	//        key     value
+	var wo ={"name" : "친형", "addr" : "안산"};
+	//stringify => Json 객체를 String 객체로 변환
+	alert("JSON.stringify(wo)->" + JSON.stringify(wo));
+	// parse 메소드는 String 객체를 Json객체로 변환
+	alert("JSON.parse(JSON.stringify(wo)).name ->" + JSON.parse(JSON.stringify(wo)).name);
+	alert("wo.name->" + wo.name);
+	alert("wo.addr->" + wo.addr);
+</script>
+</head>
+<body>
+<h1>dom Json</h1>
+</body>
+</html>

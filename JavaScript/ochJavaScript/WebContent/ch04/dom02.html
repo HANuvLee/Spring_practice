@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>dom02</h1>
+<h1>id 이용 선택 Click Event</h1>
+<p id = "text">기본색 검정</p>
+<!--  -->
+<button onclick="chgRedColor()">빨간색</button><p>
+<button onclick="chgOrangeColor()">오렌지색</button>
+
+<script type="text/javascript">
+	var str = document.getElementById("text");
+	function chgRedColor(){
+		str.style.color="red";
+	}
+	function chgOrangeColor() {
+		str.style.color="orange";
+	}
+</script>
+
+</body>
+</html>

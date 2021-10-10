@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	//window 객체 , 사용자에게 간단한 메시지를 보여주고 , 사용자가 확인이나 취소를 누르면 그 결과를 boolean 값으로 반환
+	var answer = confirm("[확인] [취소]중 선택 : 수강 신청을 하시겠습니까?");
+	
+	if (answer == true) {
+		document.write("등록되었습니다.");
+	}
+	else {
+		document.write("취소되었습니다. 다시 신청해 주세요");
+	}
+</script>
+</head>
+<body>
+	<h1>confirm 함수를 사용하는 예제</h1>
+	<hr>
+</body>
+</html>
